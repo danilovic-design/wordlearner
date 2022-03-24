@@ -5,7 +5,6 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";*/
-import { AuthContext } from "../../contexts/Authcontext";
 /*
 export default function Navigation() {
   let isAuthenticated = React.useContext(AuthContext);
@@ -39,6 +38,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
+import { AuthContext } from "../../contexts/Authcontext";
+import { useNavigate } from "react-router-dom";
 
 /*const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -84,6 +85,7 @@ export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   let isAuthenticated = React.useContext(AuthContext);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -117,7 +119,7 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={()=> {handleMenuClose(); navigate("/profile")}}>Change password</MenuItem>
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
   );

@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
 
 const style = {
   position: "absolute",
@@ -16,22 +17,22 @@ const style = {
   p: 4,
 };
 
-export default function ConfirmDeleteDictionary({
-  handleCloseDeletion,
-  confirmDeletion,
+export default function ChangeWordModal({
+  handleCloseChangeWord,
+  changeWordOpen,
 }) {
   const handleNewWordSubmit = () => console.log("New dictionary submit");
   return (
     <div>
       <Modal
-        open={confirmDeletion}
-        onClose={handleCloseDeletion}
+        open={changeWordOpen}
+        onClose={handleCloseChangeWord}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Do you really want to delete this dictionary?
+            Change your entry
           </Typography>
 
           <Box
@@ -40,22 +41,29 @@ export default function ConfirmDeleteDictionary({
             noValidate
             sx={{ mt: 1 }}
           >
-            <Button
-              onClick={handleCloseDeletion}
+            <TextField
+              margin="normal"
+              required
               fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Go back
-            </Button>
-
+              id="firstlanguage"
+              label="ring"
+              name="firstlanguage"
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="secondlanguage"
+              label="csörgés"
+              name="secondlanguage"
+            />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Delete
+              Change word
             </Button>
           </Box>
         </Box>

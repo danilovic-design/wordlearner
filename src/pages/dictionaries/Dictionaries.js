@@ -7,6 +7,9 @@ import Typography from "@mui/material/Typography";
 import Dictionary from "./dictionary/Dictionary";
 import NewWordModal from "./newwordmodal/Newwordmodal";
 import ConfirmDeleteDictionary from "./confirmdeletedictionary/Confirmdeletedictionary";
+import Divider from "@mui/material/Divider";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
 
 export default function Dictionaries() {
   const [newDictionaryOpen, setNewDictionaryOpen] = React.useState(false);
@@ -23,6 +26,19 @@ export default function Dictionaries() {
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <Breadcrumbs aria-label="breadcrumb">
+        <Link underline="hover" color="inherit" href="/">
+          MUI
+        </Link>
+        <Link
+          underline="hover"
+          color="inherit"
+          href="/getting-started/installation/"
+        >
+          Core
+        </Link>
+        <Typography color="text.primary">Breadcrumbs</Typography>
+      </Breadcrumbs>
       <Button
         onClick={handleOpenDictionary}
         type="submit"
@@ -32,10 +48,9 @@ export default function Dictionaries() {
       >
         Create a new dictionary
       </Button>
-      <hr />
-      <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-        My dictionaries
-      </Typography>
+
+      <Divider />
+
       <Dictionary
         handleOpenWord={handleOpenWord}
         handleConfirmDeletion={handleConfirmDeletion}
