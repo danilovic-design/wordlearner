@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import { Link as BrowserLink } from "react-router-dom";
 
 export default function Words() {
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ export default function Words() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          All the dictionaries
+        <Link component={BrowserLink} underline="hover" color="inherit" to="/">
+          My dictionaries
         </Link>
         <Typography color="text.primary">
           Swedish-Hungarian dictionary

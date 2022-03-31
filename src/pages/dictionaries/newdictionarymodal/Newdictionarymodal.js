@@ -4,6 +4,9 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
+import { saveDict } from "../../../database/dbfunctions";
+import { AuthContext } from "../../../contexts/Authcontext";
+import { DataContext } from "../../../contexts/Datacontext";
 
 const style = {
   position: "absolute",
@@ -21,7 +24,27 @@ export default function NewDictionaryModal({
   handleCloseDictionary,
   newDictionaryOpen,
 }) {
-  const handleNewDictionarySubmit = () => console.log("New dictionary submit");
+  let { uid } = React.useContext(AuthContext);
+  let { dictionaries } = React.useContext(DataContext);
+  const handleNewDictionarySubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log("New dictionary submit");
+    console.log({
+      fl: data.get("firstlanguage"),
+      sl: data.get("secondlanguage"),
+      uid: uid,
+    });
+    let saveData = {
+      firstLang: data.get("firstlanguage"),
+      secondLang: data.get("secondlanguage"),
+      dictionaries: dictionaries,
+      userId: uid,
+    };
+    saveDict(saveData).then(() => {
+      handleCloseDictionary();
+    });
+  };
   return (
     <div>
       <Modal

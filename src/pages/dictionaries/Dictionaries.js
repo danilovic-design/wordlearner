@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
@@ -10,6 +10,7 @@ import ConfirmDeleteDictionary from "./confirmdeletedictionary/Confirmdeletedict
 import Divider from "@mui/material/Divider";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
+import { DataContext } from "../../contexts/Datacontext";
 
 export default function Dictionaries() {
   const [newDictionaryOpen, setNewDictionaryOpen] = React.useState(false);
@@ -22,23 +23,32 @@ export default function Dictionaries() {
   const [confirmDeletion, setConfirmDeletion] = React.useState(false);
   const handleConfirmDeletion = () => setConfirmDeletion(true);
   const handleCloseDeletion = () => setConfirmDeletion(false);
+  const { storedDictionaryData } = useContext(DataContext);
+
+  const [userDictionaries, setUserDictionaries] = React.useState([]);
+
+  useEffect(() => {
+    console.log("[+] - Use effect in action in Dictionaries");
+    console.log(storedDictionaryData);
+    setUserDictionaries(storedDictionaryData);
+  }, [storedDictionaryData]);
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          MUI
-        </Link>
-        <Link
-          underline="hover"
-          color="inherit"
-          href="/getting-started/installation/"
-        >
-          Core
-        </Link>
-        <Typography color="text.primary">Breadcrumbs</Typography>
+        <Typography color="text.primary">My dictionaries</Typography>
       </Breadcrumbs>
+      {userDictionaries.map((data, index) => (
+        <Dictionary
+          key={`userdicts${index}`}
+          handleOpenWord={handleOpenWord}
+          handleConfirmDeletion={handleConfirmDeletion}
+        />
+      ))}
+
+      <Divider />
+
       <Button
         onClick={handleOpenDictionary}
         type="submit"
@@ -48,13 +58,6 @@ export default function Dictionaries() {
       >
         Create a new dictionary
       </Button>
-
-      <Divider />
-
-      <Dictionary
-        handleOpenWord={handleOpenWord}
-        handleConfirmDeletion={handleConfirmDeletion}
-      />
       <NewDictionaryModal
         handleCloseDictionary={handleCloseDictionary}
         newDictionaryOpen={newDictionaryOpen}

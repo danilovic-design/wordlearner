@@ -4,16 +4,14 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "../../database/authfunctions";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { signUp } from "../../database/authfunctions";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -35,18 +33,31 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Signup() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSignupSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
-    signIn(data.get("email"), data.get("password")).then(() => {
-      navigate("/");
-    });
+    signUp(data.get("email"), data.get("password"))
+      .then((userCredential) => {
+        // Signed in
+        /*const user = userCredential.user;
+        return user;*/
+        console.log("[+] - Signup happened");
+        navigate("/");
+        // ...
+      })
+
+      .catch((error) => {
+        //const errorCode = error.code;
+        //const errorMessage = error.message;
+        // ..
+        console.log(error);
+      });
   };
 
   return (
@@ -62,11 +73,11 @@ export default function Login() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={handleSignupSubmit}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -88,12 +99,17 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="passwordagain"
+              label="Password again"
+              type="password"
+              id="passwordagain"
             />
+
             <Button
               type="submit"
               fullWidth
@@ -109,9 +125,9 @@ export default function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <RouterLink to="/signup">
-                  "Don't have an account? Sign Up"
-                </RouterLink>
+                <Link href="#" variant="body2">
+                  {"Do you have an account? Sign In"}
+                </Link>
               </Grid>
             </Grid>
           </Box>

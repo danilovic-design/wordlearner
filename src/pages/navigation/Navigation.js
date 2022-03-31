@@ -28,18 +28,17 @@ export default function Navigation() {
       }*/
 
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../contexts/Authcontext";
 import { useNavigate } from "react-router-dom";
+import { logOut } from "../../database/authfunctions";
 
 /*const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -67,7 +66,7 @@ import { useNavigate } from "react-router-dom";
   justifyContent: "center",
 }));*/
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+/*const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -79,12 +78,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: "20ch",
     },
   },
-}));
+}));*/
 
 export default function PrimarySearchAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  let isAuthenticated = React.useContext(AuthContext);
+  //const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  let { isAuthenticated, setUid } = React.useContext(AuthContext);
   const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -93,13 +92,21 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
+  /*const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
+  };*/
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-    handleMobileMenuClose();
+    //handleMobileMenuClose();
+  };
+
+  const handleLogOut = () => {
+    handleMenuClose();
+    logOut().then(() => {
+      setUid(null);
+      navigate("/login");
+    });
   };
 
   const menuId = "primary-search-account-menu";
@@ -119,10 +126,19 @@ export default function PrimarySearchAppBar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={()=> {handleMenuClose(); navigate("/profile")}}>Change password</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem
+        onClick={() => {
+          handleMenuClose();
+          navigate("/profile");
+        }}
+      >
+        Change password
+      </MenuItem>
+      <MenuItem onClick={handleLogOut}>Logout</MenuItem>
     </Menu>
   );
+
+  console.log("Is authenticated ", isAuthenticated);
 
   return (
     <Box sx={{ flexGrow: 1 }}>

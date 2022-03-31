@@ -7,15 +7,47 @@ import Wordlist from "../pages/wordlist/Wordlist";
 import Tester from "../pages/tester/Tester";
 import Notfound from "../pages/notfound/Notfound";
 import Profile from "../pages/profile/Profile";
+import ProtectedRoute from "../contexts/ProtectedRoute";
+import PublicRoute from "../contexts/PublicRoute";
+import SignUp from "../pages/signup/Signup";
 
 export default function Layout() {
   return (
     <div>
       <Navigation />
       <Routes>
-        <Route path="/" element={<Dictionaries />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dictionary" element={<Wordlist />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Dictionaries />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/dictionary"
+          element={
+            <ProtectedRoute>
+              <Wordlist />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/test" element={<Tester />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Notfound />} />
