@@ -1,9 +1,6 @@
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-// Follow this pattern to import other Firebase services
-// import { } from 'firebase/<service>';
 
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -23,7 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log("[+] - App initialised");
+
 // eslint-disable-next-line
 const analytics = getAnalytics(app);
 

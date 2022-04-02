@@ -1,32 +1,3 @@
-//import * as React from "react";
-/*
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";*/
-/*
-export default function Navigation() {
-  let isAuthenticated = React.useContext(AuthContext);
-  console.log(isAuthenticated ? "[+] - problem sovled" : isAuthenticated);
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-    <AppBar position="static">
-    <Toolbar>
-    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-    News
-    </Typography>
-    {isAuthenticated ? (
-      <div>Ok</div>
-      ) : (
-        <Button color="inherit">Login</Button>
-        )}
-        </Toolbar>
-        </AppBar>
-        </Box>
-        );
-      }*/
-
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -37,6 +8,7 @@ import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Button from "@mui/material/Button";
 import { AuthContext } from "../../contexts/Authcontext";
+import { DataContext } from "../../contexts/Datacontext";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../database/authfunctions";
 
@@ -81,31 +53,36 @@ import { logOut } from "../../database/authfunctions";
 }));*/
 
 export default function PrimarySearchAppBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  //const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  let { isAuthenticated, setUid } = React.useContext(AuthContext);
   const navigate = useNavigate();
-
+  let { isAuthenticated, setUid, setIsAuthenticated } =
+    React.useContext(AuthContext);
+  let { setStoredDictionaryData } = React.useContext(DataContext);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const isMenuOpen = Boolean(anchorEl);
+  const [logoutDone, setLogoutDone] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!isAuthenticated && logoutDone) {
+      setLogoutDone(false);
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate, logoutDone]);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
-  /*const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };*/
-
   const handleMenuClose = () => {
     setAnchorEl(null);
-    //handleMobileMenuClose();
   };
 
   const handleLogOut = () => {
     handleMenuClose();
     logOut().then(() => {
       setUid(null);
-      navigate("/login");
+      setStoredDictionaryData([]);
+      setIsAuthenticated(false);
+      setLogoutDone(true);
     });
   };
 
@@ -132,7 +109,7 @@ export default function PrimarySearchAppBar() {
           navigate("/profile");
         }}
       >
-        Change password
+        Manage your account
       </MenuItem>
       <MenuItem onClick={handleLogOut}>Logout</MenuItem>
     </Menu>
@@ -158,7 +135,14 @@ export default function PrimarySearchAppBar() {
               </IconButton>
             </Box>
           ) : (
-            <Button color="inherit">Login</Button>
+            <Button
+              color="inherit"
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Login
+            </Button>
           )}
         </Toolbar>
       </AppBar>

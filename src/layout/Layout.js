@@ -1,7 +1,7 @@
 import * as React from "react";
-import Login from "../pages/login/Login";
 import Navigation from "../pages/navigation/Navigation";
 import { Route, Routes } from "react-router-dom";
+import Login from "../pages/login/Login";
 import Dictionaries from "../pages/dictionaries/Dictionaries";
 import Wordlist from "../pages/wordlist/Wordlist";
 import Tester from "../pages/tester/Tester";
@@ -10,6 +10,7 @@ import Profile from "../pages/profile/Profile";
 import ProtectedRoute from "../contexts/ProtectedRoute";
 import PublicRoute from "../contexts/PublicRoute";
 import SignUp from "../pages/signup/Signup";
+import UnderConstruction from "../pages/underconstruction/Underconstruction";
 
 export default function Layout() {
   return (
@@ -25,6 +26,14 @@ export default function Layout() {
           }
         />
         <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <SignUp />
+            </PublicRoute>
+          }
+        />
+        <Route
           path="/login"
           element={
             <PublicRoute>
@@ -33,10 +42,10 @@ export default function Layout() {
           }
         />
         <Route
-          path="/signup"
+          path="/resetpassword"
           element={
             <PublicRoute>
-              <SignUp />
+              <UnderConstruction />
             </PublicRoute>
           }
         />
@@ -56,7 +65,15 @@ export default function Layout() {
             </ProtectedRoute>
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="*" element={<Notfound />} />
       </Routes>
     </div>

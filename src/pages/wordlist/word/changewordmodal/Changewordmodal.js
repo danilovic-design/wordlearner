@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
+import { changeWord } from "../../../../database/dbfunctions";
 
 const style = {
   position: "absolute",
@@ -20,8 +21,35 @@ const style = {
 export default function ChangeWordModal({
   handleCloseChangeWord,
   changeWordOpen,
+  wordData,
+  dictId,
+  allDictionaryData,
+  userId,
 }) {
-  const handleNewWordSubmit = () => console.log("New dictionary submit");
+  const handleNewWordSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const payload = {
+      userId: userId,
+      dictId: dictId,
+      userDictionaries: allDictionaryData,
+      wordData: wordData,
+      newWord: {
+        rightGuesses: 0,
+        firstLang: data.get("firstlanguage"),
+        secondLang: data.get("secondlanguage"),
+      },
+    };
+    console.log("New dictionary submit", payload);
+    changeWord(payload).then(() => {
+      handleCloseChangeWord();
+    });
+  };
+
+  const shortenTitle = (title) => {
+    return title.length > 50 ? title.substr(0, 49) + "..." : title;
+  };
+
   return (
     <div>
       <Modal
@@ -46,7 +74,8 @@ export default function ChangeWordModal({
               required
               fullWidth
               id="firstlanguage"
-              label="ring"
+              label={shortenTitle(wordData.firstLang)}
+              defaultValue={wordData.firstLang}
               name="firstlanguage"
             />
             <TextField
@@ -54,7 +83,8 @@ export default function ChangeWordModal({
               required
               fullWidth
               id="secondlanguage"
-              label="csörgés"
+              label={shortenTitle(wordData.secondLang)}
+              defaultValue={wordData.secondLang}
               name="secondlanguage"
             />
             <Button

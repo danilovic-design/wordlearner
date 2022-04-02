@@ -25,10 +25,8 @@ export default function NewWordModal({
   userId,
   userDictionaries,
 }) {
-  // console.log("data", data.dictId);
   const handleNewWordSubmit = (event) => {
     event.preventDefault();
-    //  console.log("New dictionary submit");
     const formData = new FormData(event.currentTarget);
     const payload = {
       userId: userId,
@@ -37,12 +35,12 @@ export default function NewWordModal({
       firstLang: formData.get("firstlanguage"),
       secondLang: formData.get("secondlanguage"),
     };
-    console.log(payload);
+
     saveNewWord(payload).then(() => {
       handleCloseWord();
     });
   };
-  //console.log("[+] - New word open", data);
+
   return (
     <div>
       <Modal

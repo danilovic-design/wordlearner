@@ -9,6 +9,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import { Link as BrowserLink } from "react-router-dom";
 
 export default function Profile() {
   const handleSubmit = (submitEvent) => {
@@ -33,12 +34,15 @@ export default function Profile() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
-        <Link underline="hover" color="inherit" href="/">
-          All the dictionaries
+        <Link
+          underline="hover"
+          component={BrowserLink}
+          color="inherit"
+          to={"/"}
+        >
+          Dictionaries
         </Link>
-        <Typography color="text.primary">
-          Swedish-Hungarian dictionary
-        </Typography>
+        <Typography color="text.primary">Manage your account</Typography>
       </Breadcrumbs>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         <TextField

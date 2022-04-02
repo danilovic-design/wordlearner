@@ -29,12 +29,6 @@ export default function NewDictionaryModal({
   const handleNewDictionarySubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log("New dictionary submit");
-    console.log({
-      fl: data.get("firstlanguage"),
-      sl: data.get("secondlanguage"),
-      uid: uid,
-    });
     let saveData = {
       firstLang: data.get("firstlanguage"),
       secondLang: data.get("secondlanguage"),

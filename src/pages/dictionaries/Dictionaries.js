@@ -9,7 +9,6 @@ import Divider from "@mui/material/Divider";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { DataContext } from "../../contexts/Datacontext";
 import { AuthContext } from "../../contexts/Authcontext";
-import NewWordModal from "./dictionary/newwordmodal/Newwordmodal";
 
 export default function Dictionaries() {
   const [newDictionaryOpen, setNewDictionaryOpen] = React.useState(false);
@@ -41,7 +40,7 @@ export default function Dictionaries() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
-        <Typography color="text.primary">My dictionaries</Typography>
+        <Typography color="text.primary">Dictionaries</Typography>
       </Breadcrumbs>
       {userDictionaries.map((data, index) => (
         <Dictionary

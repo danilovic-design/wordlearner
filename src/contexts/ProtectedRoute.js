@@ -4,7 +4,7 @@ import { AuthContext } from "./Authcontext";
 
 function PrivateRoute({ children, location, ...rest }) {
   let { isAuthenticated } = useContext(AuthContext);
- // console.log("[+] - Private route, isAuthenticated", isAuthenticated);
+
   return isAuthenticated ? (
     children
   ) : (

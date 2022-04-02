@@ -73,6 +73,10 @@ export default function Word({ wordData, userId, dictId, allDictionaryData }) {
       <ChangeWordModal
         changeWordOpen={changeWordOpen}
         handleCloseChangeWord={handleCloseChangeWord}
+        wordData={wordData}
+        dictId={dictId}
+        userId={userId}
+        allDictionaryData={allDictionaryData}
       ></ChangeWordModal>
       <DeleteWordModal
         handleCloseDeletion={handleCloseDeletion}

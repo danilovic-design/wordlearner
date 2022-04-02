@@ -36,15 +36,12 @@ export default function Tester() {
   const [currentWord, setCurrentWord] = React.useState("");
 
   React.useEffect(() => {
-    console.log("[+] - Tester useEffect run");
-    console.log(storedDictionaryData);
     setAllDictionaryData(storedDictionaryData);
     if (storedDictionaryData.length > 0) {
       let filteredDictionary = storedDictionaryData.filter((dict) => {
         return dict.dictId === dictId;
       });
       setDictData(filteredDictionary[0]);
-      console.log("Setting wordlist", filteredDictionary[0].words);
       setWordList(filteredDictionary[0].words);
       getRandomWord();
     }
@@ -55,7 +52,6 @@ export default function Tester() {
   }, [defaultDirection]);
 
   const getRandomNumber = () => {
-    console.log("Getting a random number");
     let maxWords = wordList.length;
     let createdRandomNumber = Math.floor(Math.random() * maxWords);
     if (maxWords > 1) {
@@ -94,18 +90,7 @@ export default function Tester() {
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
         <Link component={RouterLink} underline="hover" color="inherit" to="/">
-          My dictionaries
-        </Link>
-        <Link
-          component={RouterLink}
-          underline="hover"
-          color="inherit"
-          to={`/dictionary/${dictId}`}
-        >
-          {" "}
-          {dictData.firstLang
-            ? `${dictData.firstLang} - ${dictData.secondLang} dictionary`
-            : null}
+          Dictionaries
         </Link>
         <Typography color="text.primary">
           {dictData.firstLang

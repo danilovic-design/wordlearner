@@ -25,7 +25,6 @@ export default function Dictionary({
   handleCloseWord,
   newWordOpen,
 }) {
-  console.log("[+] - Dictionary, data", data);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
 

@@ -23,8 +23,6 @@ export default function Words() {
   const [allDictionaryData, setAllDictionaryData] = useState();
 
   useEffect(() => {
-    console.log("[+] - Wordlist Use effect, dictId", dictId);
-    console.log(storedDictionaryData);
     if (storedDictionaryData.length > 0) {
       setAllDictionaryData(storedDictionaryData);
       let filteredDictionary = storedDictionaryData.filter((dict) => {
@@ -32,20 +30,19 @@ export default function Words() {
       });
       setDictWords(filteredDictionary[0].words);
       setDictData(filteredDictionary[0]);
-      console.log(dictWords);
     }
-  });
+  }, [dictId, storedDictionaryData]);
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Breadcrumbs aria-label="breadcrumb">
         <Link component={BrowserLink} underline="hover" color="inherit" to="/">
-          My dictionaries
+          Dictionaries
         </Link>
         <Typography color="text.primary">
           {dictData
-            ? `${dictData.firstLang}-${dictData.secondLang} dictionary`
+            ? `${dictData.firstLang}-${dictData.secondLang} words`
             : null}
         </Typography>
       </Breadcrumbs>

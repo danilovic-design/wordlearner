@@ -1,17 +1,24 @@
 import { auth } from "./firebaseconfig";
+
 import {
+  setPersistence,
+  signInWithEmailAndPassword,
+  browserSessionPersistence,
   createUserWithEmailAndPassword,
   signOut,
-  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 export const signUp = (email, password) => {
-  console.log("[+] - Signup function executed");
   return createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signIn = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+export const signIn = async (email, password, persistence) => {
+  if (persistence) {
+    await setPersistence(auth, browserSessionPersistence);
+    return signInWithEmailAndPassword(auth, email, password);
+  } else {
+    return signInWithEmailAndPassword(auth, email, password);
+  }
 };
 
 export const logOut = () => {

@@ -1,4 +1,4 @@
-import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 
 const newDict = (data) => {
@@ -79,30 +79,51 @@ export const saveNewWord = ({
 };
 
 export const deleteWord = ({ userId, dictId, userDictionaries, wordData }) => {
-  console.log("[+] - Delete word from DB");
-  console.log("[+] - Word data", wordData);
   let unchangedDictionaries = userDictionaries.filter((dict) => {
-    console.log("[+] - Filtering UNchanged");
-    console.log(dict.dictId, dictId);
     return dict.dictId !== dictId;
   });
   let changedDictionary = userDictionaries.filter((dict) => {
-    console.log("[+] - Filtering changed");
-    console.log(dict.dictId, dictId);
     return dict.dictId === dictId;
   });
 
   let changedWordList = changedDictionary[0].words.filter((word) => {
     return word.firstLang !== wordData.firstLang;
   });
-  //console.log(changedWordList);
 
   changedDictionary[0].words = changedWordList;
 
   unchangedDictionaries.push(changedDictionary[0]);
 
   let dbData = { userDictionaries: unchangedDictionaries };
-  //console.log(dbData);
+
+  return setDoc(doc(db, "data", userId), dbData);
+};
+
+export const changeWord = ({
+  userId,
+  dictId,
+  userDictionaries,
+  wordData,
+  newWord,
+}) => {
+  let unchangedDictionaries = userDictionaries.filter((dict) => {
+    return dict.dictId !== dictId;
+  });
+  let changedDictionary = userDictionaries.filter((dict) => {
+    return dict.dictId === dictId;
+  });
+
+  let changedWordList = changedDictionary[0].words.filter((word) => {
+    return word.firstLang !== wordData.firstLang;
+  });
+
+  changedWordList.push(newWord);
+
+  changedDictionary[0].words = changedWordList;
+
+  unchangedDictionaries.push(changedDictionary[0]);
+
+  let dbData = { userDictionaries: unchangedDictionaries };
 
   return setDoc(doc(db, "data", userId), dbData);
 };

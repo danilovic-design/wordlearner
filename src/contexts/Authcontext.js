@@ -11,20 +11,8 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("[inside] - OnAuthStateChanged - user present ");
-        console.log(user);
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        // const uid = user.uid;
-        //setIsAuthenticated(true);
-        // ...
         setUid(user.uid);
         setIsAuthenticated(true);
-      } else {
-        console.log("[inside] - OnAuthStateChanged - user NOT present ");
-        // User is signed out
-        // ...
-        //setIsAuthenticated(false);
       }
     });
   }, []);
