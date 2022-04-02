@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { deleteDict } from "../../../../database/dbfunctions";
 
 const style = {
   position: "absolute",
@@ -19,8 +20,26 @@ const style = {
 export default function ConfirmDeleteDictionary({
   handleCloseDeletion,
   confirmDeletion,
+  dict2delete,
+  setDict2delete,
+  userId,
+  userDictionaries,
 }) {
-  const handleNewWordSubmit = () => console.log("New dictionary submit");
+  // console.log("[+] - Confirm delete dictionary, userid", userId);
+
+  const handleDeleteDict = () => {
+    // console.log("Deleting", dict2delete);
+
+    deleteDict(userDictionaries, dict2delete, userId).then(() => {
+      setDict2delete("");
+      handleCloseDeletion();
+      //   console.log("Dict is deleted");
+    });
+  };
+  const handleGoBack = () => {
+    setDict2delete("");
+    handleCloseDeletion();
+  };
   return (
     <div>
       <Modal
@@ -34,14 +53,9 @@ export default function ConfirmDeleteDictionary({
             Do you really want to delete this dictionary?
           </Typography>
 
-          <Box
-            component="form"
-            onSubmit={handleNewWordSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <Button
-              onClick={handleCloseDeletion}
+              onClick={handleGoBack}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
@@ -50,7 +64,7 @@ export default function ConfirmDeleteDictionary({
             </Button>
 
             <Button
-              type="submit"
+              onClick={handleDeleteDict}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}

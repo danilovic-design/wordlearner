@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
+import { saveNewWord } from "../../../../database/dbfunctions";
 
 const style = {
   position: "absolute",
@@ -17,8 +18,31 @@ const style = {
   p: 4,
 };
 
-export default function NewDictionaryModal({ handleCloseWord, newWordOpen }) {
-  const handleNewWordSubmit = () => console.log("New dictionary submit");
+export default function NewWordModal({
+  handleCloseWord,
+  newWordOpen,
+  data,
+  userId,
+  userDictionaries,
+}) {
+  // console.log("data", data.dictId);
+  const handleNewWordSubmit = (event) => {
+    event.preventDefault();
+    //  console.log("New dictionary submit");
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      userId: userId,
+      dictId: data.dictId,
+      userDictionaries: userDictionaries,
+      firstLang: formData.get("firstlanguage"),
+      secondLang: formData.get("secondlanguage"),
+    };
+    console.log(payload);
+    saveNewWord(payload).then(() => {
+      handleCloseWord();
+    });
+  };
+  //console.log("[+] - New word open", data);
   return (
     <div>
       <Modal
@@ -29,7 +53,7 @@ export default function NewDictionaryModal({ handleCloseWord, newWordOpen }) {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create a new dictionary
+            Create a new word
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
@@ -45,7 +69,7 @@ export default function NewDictionaryModal({ handleCloseWord, newWordOpen }) {
               required
               fullWidth
               id="firstlanguage"
-              label="In Hungarian"
+              label={`In ${data.firstLang}`}
               name="firstlanguage"
             />
             <TextField
@@ -53,7 +77,7 @@ export default function NewDictionaryModal({ handleCloseWord, newWordOpen }) {
               required
               fullWidth
               id="secondlanguage"
-              label="In Swedish"
+              label={`In ${data.secondLang}`}
               name="secondlanguage"
             />
             <Button

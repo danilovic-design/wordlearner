@@ -41,14 +41,21 @@ export default function Layout() {
           }
         />
         <Route
-          path="/dictionary"
+          path="/dictionary/:dictId"
           element={
             <ProtectedRoute>
               <Wordlist />
             </ProtectedRoute>
           }
         />
-        <Route path="/test" element={<Tester />} />
+        <Route
+          path="/test/:dictId"
+          element={
+            <ProtectedRoute>
+              <Tester />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<Notfound />} />
       </Routes>

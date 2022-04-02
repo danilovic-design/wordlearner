@@ -9,7 +9,7 @@ import Card from "@mui/material/Card";
 import ChangeWordModal from "./changewordmodal/Changewordmodal";
 import DeleteWordModal from "./confirmdeleteword/Confirmdeleteword";
 
-export default function Word() {
+export default function Word({ wordData, userId, dictId, allDictionaryData }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,8 +28,8 @@ export default function Word() {
     <Card>
       <Grid container>
         <Grid item xs={11}>
-          <Box>Word</Box>
-          <Box>Szó</Box>
+          <Box>{wordData.firstLang}</Box>
+          <Box>{wordData.secondLang}</Box>
         </Grid>
         <Grid item xs={1}>
           <IconButton onClick={handleMenu} aria-label="settings">
@@ -77,6 +77,11 @@ export default function Word() {
       <DeleteWordModal
         handleCloseDeletion={handleCloseDeletion}
         confirmDeletion={confirmDeletion}
+        wordData={wordData}
+        userId={userId}
+        dictId={dictId}
+        allDictionaryData={allDictionaryData}
+        firstLang={wordData.firstLang}
       ></DeleteWordModal>
     </Card>
   );

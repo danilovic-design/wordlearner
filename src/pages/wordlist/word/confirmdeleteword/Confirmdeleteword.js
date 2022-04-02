@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import { deleteWord } from "../../../../database/dbfunctions";
 
 const style = {
   position: "absolute",
@@ -19,8 +20,23 @@ const style = {
 export default function ConfirmDeleteWord({
   handleCloseDeletion,
   confirmDeletion,
+  userId,
+  dictId,
+  wordData,
+  allDictionaryData,
 }) {
-  const handleNewWordSubmit = () => console.log("New dictionary submit");
+  const handleDeleteWordSubmit = () => {
+    let payload = {
+      dictId: dictId,
+      userId: userId,
+      wordData: wordData,
+      userDictionaries: allDictionaryData,
+    };
+    deleteWord(payload).then(() => {
+      console.log("New dictionary submit");
+      handleCloseDeletion();
+    });
+  };
   return (
     <div>
       <Modal
@@ -31,15 +47,10 @@ export default function ConfirmDeleteWord({
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Do you really want to delete this dictionary?
+            Do you really want to delete this word?
           </Typography>
 
-          <Box
-            component="form"
-            onSubmit={handleNewWordSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" noValidate sx={{ mt: 1 }}>
             <Button
               onClick={handleCloseDeletion}
               fullWidth
@@ -50,7 +61,7 @@ export default function ConfirmDeleteWord({
             </Button>
 
             <Button
-              type="submit"
+              onClick={handleDeleteWordSubmit}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}

@@ -5,33 +5,37 @@ import Button from "@mui/material/Button";
 import NewDictionaryModal from "./newdictionarymodal/Newdictionarymodal";
 import Typography from "@mui/material/Typography";
 import Dictionary from "./dictionary/Dictionary";
-import NewWordModal from "./newwordmodal/Newwordmodal";
-import ConfirmDeleteDictionary from "./confirmdeletedictionary/Confirmdeletedictionary";
 import Divider from "@mui/material/Divider";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
 import { DataContext } from "../../contexts/Datacontext";
+import { AuthContext } from "../../contexts/Authcontext";
+import NewWordModal from "./dictionary/newwordmodal/Newwordmodal";
 
 export default function Dictionaries() {
   const [newDictionaryOpen, setNewDictionaryOpen] = React.useState(false);
+  const [dict2delete, setDict2delete] = React.useState("");
   const handleOpenDictionary = () => setNewDictionaryOpen(true);
   const handleCloseDictionary = () => setNewDictionaryOpen(false);
   const [newWordOpen, setNewWordOpen] = React.useState(false);
-  const handleOpenWord = () => setNewWordOpen(true);
+  const handleOpenWord = () => {
+    console.log("open it");
+    setNewWordOpen(true);
+  };
   const handleCloseWord = () => setNewWordOpen(false);
   //handleCloseDeletion, confirmDeletion
   const [confirmDeletion, setConfirmDeletion] = React.useState(false);
+  const { storedDictionaryData } = useContext(DataContext);
+  const { uid } = useContext(AuthContext);
   const handleConfirmDeletion = () => setConfirmDeletion(true);
   const handleCloseDeletion = () => setConfirmDeletion(false);
-  const { storedDictionaryData } = useContext(DataContext);
 
   const [userDictionaries, setUserDictionaries] = React.useState([]);
+  const [userId, setUserId] = React.useState(null);
 
   useEffect(() => {
-    console.log("[+] - Use effect in action in Dictionaries");
-    console.log(storedDictionaryData);
     setUserDictionaries(storedDictionaryData);
-  }, [storedDictionaryData]);
+    setUserId(uid);
+  }, [storedDictionaryData, uid]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -42,8 +46,17 @@ export default function Dictionaries() {
       {userDictionaries.map((data, index) => (
         <Dictionary
           key={`userdicts${index}`}
-          handleOpenWord={handleOpenWord}
+          data={data}
+          userDictionaries={userDictionaries}
           handleConfirmDeletion={handleConfirmDeletion}
+          dict2delete={dict2delete}
+          setDict2delete={setDict2delete}
+          handleCloseDeletion={handleCloseDeletion}
+          confirmDeletion={confirmDeletion}
+          userId={userId}
+          newWordOpen={newWordOpen}
+          handleOpenWord={handleOpenWord}
+          handleCloseWord={handleCloseWord}
         />
       ))}
 
@@ -58,17 +71,11 @@ export default function Dictionaries() {
       >
         Create a new dictionary
       </Button>
+
       <NewDictionaryModal
         handleCloseDictionary={handleCloseDictionary}
         newDictionaryOpen={newDictionaryOpen}
-      />
-      <NewWordModal
-        handleCloseWord={handleCloseWord}
-        newWordOpen={newWordOpen}
-      />
-      <ConfirmDeleteDictionary
-        handleCloseDeletion={handleCloseDeletion}
-        confirmDeletion={confirmDeletion}
+        userDictionaries={userDictionaries}
       />
     </Container>
   );

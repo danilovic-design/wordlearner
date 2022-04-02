@@ -6,7 +6,6 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { saveDict } from "../../../database/dbfunctions";
 import { AuthContext } from "../../../contexts/Authcontext";
-import { DataContext } from "../../../contexts/Datacontext";
 
 const style = {
   position: "absolute",
@@ -23,9 +22,10 @@ const style = {
 export default function NewDictionaryModal({
   handleCloseDictionary,
   newDictionaryOpen,
+  userDictionaries,
 }) {
   let { uid } = React.useContext(AuthContext);
-  let { dictionaries } = React.useContext(DataContext);
+
   const handleNewDictionarySubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,7 +38,7 @@ export default function NewDictionaryModal({
     let saveData = {
       firstLang: data.get("firstlanguage"),
       secondLang: data.get("secondlanguage"),
-      dictionaries: dictionaries,
+      userDictionaries: userDictionaries,
       userId: uid,
     };
     saveDict(saveData).then(() => {

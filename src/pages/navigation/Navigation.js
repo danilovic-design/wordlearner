@@ -138,8 +138,6 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
-  console.log("Is authenticated ", isAuthenticated);
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

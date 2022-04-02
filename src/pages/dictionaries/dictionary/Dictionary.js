@@ -9,8 +9,23 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
+import ConfirmDeleteDictionary from "./confirmdeletedictionary/Confirmdeletedictionary";
+import NewWordModal from "./newwordmodal/Newwordmodal";
 
-export default function Dictionary({ handleOpenWord, handleConfirmDeletion }) {
+export default function Dictionary({
+  handleConfirmDeletion,
+  data,
+  setDict2delete,
+  handleCloseDeletion,
+  confirmDeletion,
+  dict2delete,
+  userDictionaries,
+  userId,
+  handleOpenWord,
+  handleCloseWord,
+  newWordOpen,
+}) {
+  console.log("[+] - Dictionary, data", data);
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -31,14 +46,14 @@ export default function Dictionary({ handleOpenWord, handleConfirmDeletion }) {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Magyar - Svéd"
-          subheader="Contains 125 words"
+          title={`${data.firstLang} - ${data.secondLang}`}
+          subheader={`Contains ${data.words.length} words`}
         />
         <CardActions>
           <Button size="small" onClick={handleOpenWord}>
             Add a new word
           </Button>
-          <Button size="small" onClick={() => navigate("/test")}>
+          <Button size="small" onClick={() => navigate(`/test/${data.dictId}`)}>
             Start a test
           </Button>
         </CardActions>
@@ -60,7 +75,7 @@ export default function Dictionary({ handleOpenWord, handleConfirmDeletion }) {
           <MenuItem
             onClick={() => {
               handleClose();
-              navigate("/dictionary");
+              navigate(`/dictionary/${data.dictId}`);
             }}
           >
             Show/modify words
@@ -68,6 +83,7 @@ export default function Dictionary({ handleOpenWord, handleConfirmDeletion }) {
           <MenuItem
             onClick={() => {
               handleClose();
+              setDict2delete(data.dictId);
               handleConfirmDeletion();
             }}
           >
@@ -75,6 +91,23 @@ export default function Dictionary({ handleOpenWord, handleConfirmDeletion }) {
           </MenuItem>
         </Menu>
       </Card>
+
+      <ConfirmDeleteDictionary
+        handleCloseDeletion={handleCloseDeletion}
+        confirmDeletion={confirmDeletion}
+        dict2delete={dict2delete}
+        setDict2delete={setDict2delete}
+        userDictionaries={userDictionaries}
+        userId={userId}
+      />
+
+      <NewWordModal
+        handleCloseWord={handleCloseWord}
+        newWordOpen={newWordOpen}
+        data={data}
+        userId={userId}
+        userDictionaries={userDictionaries}
+      />
     </Box>
   );
 }
