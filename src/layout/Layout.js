@@ -17,7 +17,14 @@ import { StateContext } from "../contexts/Statecontext";
 
 const CircularIndeterminate = function () {
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingTop: "40px",
+      }}
+    >
       <CircularProgress />
     </Box>
   );

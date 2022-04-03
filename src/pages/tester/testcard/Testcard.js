@@ -8,16 +8,18 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteWord } from "../../../database/dbfunctions";
+import Box from "@mui/material/Box";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Chip from "@mui/material/Chip";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
   transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
+  // marginLeft: "auto",
   transition: theme.transitions.create("transform", {
     duration: theme.transitions.duration.shortest,
   }),
@@ -45,11 +47,9 @@ export default function TestCard({
       console.log("New dictionary submit");
     });
   };
-  React.useEffect(() => {
-    console.log("updated");
-  });
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ paddingTop: "5px" }}>
       <CardHeader
         action={
           <IconButton onClick={handleDeleteWordSubmit} aria-label="settings">
@@ -63,7 +63,7 @@ export default function TestCard({
         }
       />
 
-      <CardActions disableSpacing>
+      <CardActions disableSpacing={true} sx={{ justifyContent: "flex-end" }}>
         <Typography>Súgó</Typography>
         <ExpandMore
           expand={expanded}
@@ -83,7 +83,14 @@ export default function TestCard({
           </Typography>
         </CardContent>
       </Collapse>
-      <Button onClick={getRandomNumber}>Guessed it</Button>
+      <Box mb={1} mr={1} sx={{ textAlign: "right" }}>
+        <Chip
+          onClick={getRandomNumber}
+          icon={<CheckCircleIcon />}
+          label="Guessed it"
+          color="success"
+        />
+      </Box>
     </Card>
   );
 }

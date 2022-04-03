@@ -92,6 +92,7 @@ export default function ChangeWordModal({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="secondary"
             >
               Change word
             </Button>

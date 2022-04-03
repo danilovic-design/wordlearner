@@ -52,7 +52,8 @@ export default function NewDictionaryModal({
             Create a new dictionary
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Here you can create a new dictionary, which allows you to gather new
+            words and test your knowledge.
           </Typography>
           <Box
             component="form"
@@ -81,6 +82,7 @@ export default function NewDictionaryModal({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="secondary"
             >
               Create
             </Button>

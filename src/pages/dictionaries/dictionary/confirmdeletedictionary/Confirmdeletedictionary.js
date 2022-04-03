@@ -59,6 +59,7 @@ export default function ConfirmDeleteDictionary({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="secondary"
             >
               Go back
             </Button>
@@ -68,6 +69,7 @@ export default function ConfirmDeleteDictionary({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="error"
             >
               Delete
             </Button>

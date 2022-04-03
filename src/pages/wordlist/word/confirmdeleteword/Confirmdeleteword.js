@@ -65,6 +65,7 @@ export default function ConfirmDeleteWord({
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="secondary"
             >
               Delete
             </Button>

@@ -8,6 +8,8 @@ import Menu from "@mui/material/Menu";
 import Card from "@mui/material/Card";
 import ChangeWordModal from "./changewordmodal/Changewordmodal";
 import DeleteWordModal from "./confirmdeleteword/Confirmdeleteword";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 export default function Word({ wordData, userId, dictId, allDictionaryData }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -28,8 +30,15 @@ export default function Word({ wordData, userId, dictId, allDictionaryData }) {
     <Card>
       <Grid container>
         <Grid item xs={11}>
-          <Box>{wordData.firstLang}</Box>
-          <Box>{wordData.secondLang}</Box>
+          <Box>
+            <Typography ml={2}>{wordData.firstLang}</Typography>
+          </Box>
+          <Divider />
+          <Box>
+            <Typography mr={2} align="right">
+              {wordData.secondLang}
+            </Typography>
+          </Box>
         </Grid>
         <Grid item xs={1}>
           <IconButton onClick={handleMenu} aria-label="settings">

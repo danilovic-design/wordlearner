@@ -2,17 +2,19 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
 import Word from "./word/Word";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Link from "@mui/material/Link";
-import { Link as BrowserLink } from "react-router-dom";
 import { DataContext } from "../../contexts/Datacontext";
 import { AuthContext } from "../../contexts/Authcontext";
 import Box from "@mui/material/Box";
 import NewWordModal from "../dictionaries/dictionary/newwordmodal/Newwordmodal";
+import { mainBoxStyle } from "../../styles/Main";
+import { BreadCrumbTypographyStyle } from "../../styles/Main";
+import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
+import HomeIcon from "@mui/icons-material/Home";
+import Stack from "@mui/material/Stack";
 
 export default function Words() {
   const { dictId } = useParams();
@@ -56,49 +58,61 @@ export default function Words() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link component={BrowserLink} underline="hover" color="inherit" to="/">
-          Dictionaries
-        </Link>
-        <Typography color="text.primary">
-          {dictData
-            ? `${dictData.firstLang}-${dictData.secondLang} words`
-            : null}
-        </Typography>
-      </Breadcrumbs>
-      <NewWordModal
-        handleCloseWord={handleCloseWord}
-        newWordOpen={newWordOpen}
-        data={dictData}
-        userId={userId}
-        userDictionaries={allDictionaryData}
-      />
-      <Divider />
-      <Box>
-        {dictWords.map((wordData, index) => (
-          <Word
-            key={`word${index}`}
-            wordData={wordData}
-            dictId={dictId}
-            userId={uid}
-            allDictionaryData={allDictionaryData}
+    <Box sx={mainBoxStyle}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
+          <StyledBreadcrumb
+            onClick={() => {
+              navigate("/");
+            }}
+            label="Home"
+            icon={<HomeIcon fontSize="small" />}
           />
-        ))}
-      </Box>
+          <StyledBreadcrumb
+            label={
+              dictData
+                ? `${dictData.firstLang}-${dictData.secondLang} words`
+                : null
+            }
+          />
+        </Breadcrumbs>
 
-      {dictWords.length === 0 ? "No words" : null}
-      <Box>
-        <Button
-          onClick={handleNewWordModalOn}
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Add a new word
-        </Button>
-      </Box>
-    </Container>
+        <NewWordModal
+          handleCloseWord={handleCloseWord}
+          newWordOpen={newWordOpen}
+          data={dictData}
+          userId={userId}
+          userDictionaries={allDictionaryData}
+        />
+        <Divider />
+        <Box>
+          <Stack spacing={1}>
+            {dictWords.map((wordData, index) => (
+              <Word
+                key={`word${index}`}
+                wordData={wordData}
+                dictId={dictId}
+                userId={uid}
+                allDictionaryData={allDictionaryData}
+              />
+            ))}
+          </Stack>
+        </Box>
+
+        {dictWords.length === 0 ? "No words" : null}
+        <Box>
+          <Button
+            onClick={handleNewWordModalOn}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            color="secondary"
+          >
+            Add a new word
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 }

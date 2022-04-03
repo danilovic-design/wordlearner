@@ -11,6 +11,10 @@ import { AuthContext } from "../../contexts/Authcontext";
 import { DataContext } from "../../contexts/Datacontext";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../database/authfunctions";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import LogoutIcon from "@mui/icons-material/Logout";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 /*const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -109,15 +113,23 @@ export default function PrimarySearchAppBar() {
           navigate("/profile");
         }}
       >
-        Manage your account
+        <ListItemIcon>
+          <SettingsIcon />
+        </ListItemIcon>
+        <ListItemText>Manage your account</ListItemText>
       </MenuItem>
-      <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+      <MenuItem onClick={handleLogOut}>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText>Logout</ListItemText>
+      </MenuItem>
     </Menu>
   );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" color="default">
         <Toolbar>
           <Box sx={{ flexGrow: 1 }} />
           {isAuthenticated ? (

@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "../../database/authfunctions";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
+import { mainBoxStyle } from "../../styles/Main";
 
 /*function delCopyright(props) {
   return (
@@ -52,84 +53,95 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography component="h1" variant="h5">
-            Log in
-          </Typography>
+      <Box sx={mainBoxStyle}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
           <Box
-            component="form"
-            onSubmit={handleLogin}
-            noValidate
-            sx={{ mt: 1 }}
+            sx={{
+              pt: 5,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
           >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="remember"
-                  color="primary"
-                  checked={persistence}
-                  onChange={handlePersistenceChange}
-                />
-              }
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+            <Typography component="h1" variant="h5">
+              Log in
+            </Typography>
+            <Box
+              component="form"
+              onSubmit={handleLogin}
+              noValidate
+              sx={{ mt: 1 }}
             >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link
-                  component={BrowserLink}
-                  to={"/resetpassword"}
-                  variant="body2"
-                >
-                  Forgot password?
-                </Link>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email Address"
+                name="email"
+                autoComplete="email"
+                color="secondary"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                color="secondary"
+                id="password"
+                autoComplete="current-password"
+              />
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    value="remember"
+                    color="primary"
+                    checked={persistence}
+                    onChange={handlePersistenceChange}
+                  />
+                }
+                label="Remember me"
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                color="secondary"
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item xs>
+                  <Link
+                    component={BrowserLink}
+                    to={"/resetpassword"}
+                    variant="body2"
+                    color="secondary"
+                  >
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link
+                    component={BrowserLink}
+                    to={"/signup"}
+                    variant="body2"
+                    color="secondary"
+                  >
+                    "Don't have an account? Sign Up"
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link component={BrowserLink} to={"/signup"} variant="body2">
-                  "Don't have an account? Sign Up"
-                </Link>
-              </Grid>
-            </Grid>
+            </Box>
           </Box>
-        </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
-      </Container>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }

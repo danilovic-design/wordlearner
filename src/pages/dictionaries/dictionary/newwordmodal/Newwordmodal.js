@@ -51,10 +51,10 @@ export default function NewWordModal({
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Create a new word
+            Add a new word
           </Typography>
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Add a new word to this dictionary.
           </Typography>
           <Box
             component="form"
@@ -81,6 +81,7 @@ export default function NewWordModal({
             <Button
               type="submit"
               fullWidth
+              color="secondary"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >

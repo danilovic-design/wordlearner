@@ -5,20 +5,28 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
+import { mainBoxStyle } from "../../styles/Main";
 
 export default function UnderConstruction() {
   const navigate = useNavigate();
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box>
-        <Typography color="text.primary">
-          This page is under construction, please visit us later
-        </Typography>
-        <Button onClick={() => navigate("/")} fullWidth>
-          Go back to homepage
-        </Button>
-      </Box>
-    </Container>
+    <Box sx={mainBoxStyle}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box sx={{ pt: 4, pb: 4 }}>
+          <Typography color="text.secondary" sx={{ pb: 4 }}>
+            This page is under construction, please visit us later
+          </Typography>
+          <Button
+            onClick={() => navigate("/")}
+            fullWidth
+            variant="contained"
+            color="secondary"
+          >
+            Go back to homepage
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 }

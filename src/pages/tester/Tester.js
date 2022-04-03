@@ -1,17 +1,20 @@
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { DataContext } from "../../contexts/Datacontext";
 import TestCard from "./testcard/Testcard";
 import { AuthContext } from "../../contexts/Authcontext";
 import Box from "@mui/material/Box";
+import { BreadCrumbTypographyStyle } from "../../styles/Main";
+import { mainBoxStyle } from "../../styles/Main";
+import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
+import HomeIcon from "@mui/icons-material/Home";
 
 export default function Tester() {
+  const navigate = useNavigate();
   const { dictId } = useParams();
   const { storedDictionaryData } = React.useContext(DataContext);
   const { uid } = React.useContext(AuthContext);
@@ -79,38 +82,53 @@ export default function Tester() {
     setExpanded(!expanded);
   };
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Breadcrumbs aria-label="breadcrumb">
-        <Link component={RouterLink} underline="hover" color="inherit" to="/">
-          Dictionaries
-        </Link>
-        <Typography color="text.primary">
-          {dictData.firstLang
-            ? `${dictData.firstLang} - ${dictData.secondLang} test`
-            : null}
-        </Typography>
-      </Breadcrumbs>
-      <Box>
-        <Button onClick={handleSwapDirections}>Swap languages</Button>
-      </Box>
-      <Box>
-        {wordList.length > 0 ? (
-          <TestCard
-            expanded={expanded}
-            handleExpandClick={handleExpandClick}
-            dictId={dictId}
-            allDictionaryData={allDictionaryData}
-            userId={uid}
-            wordList={wordList}
-            getRandomNumber={getRandomNumber}
-            randomNumber={randomNumber}
-            defaultDirection={defaultDirection}
+    <Box sx={mainBoxStyle}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
+          <StyledBreadcrumb
+            onClick={() => {
+              navigate("/");
+            }}
+            label="Home"
+            icon={<HomeIcon fontSize="small" />}
           />
-        ) : (
-          "No words in the dictionary"
-        )}
-      </Box>
-    </Container>
+          <StyledBreadcrumb
+            label={
+              dictData.firstLang
+                ? `${dictData.firstLang} - ${dictData.secondLang} test`
+                : null
+            }
+          />
+        </Breadcrumbs>
+        <Box>
+          <Button
+            fullWidth
+            variant="outlined"
+            color="secondary"
+            onClick={handleSwapDirections}
+          >
+            Swap languages
+          </Button>
+        </Box>
+        <Box sx={{ paddingTop: "20px" }}>
+          {wordList.length > 0 ? (
+            <TestCard
+              expanded={expanded}
+              handleExpandClick={handleExpandClick}
+              dictId={dictId}
+              allDictionaryData={allDictionaryData}
+              userId={uid}
+              wordList={wordList}
+              getRandomNumber={getRandomNumber}
+              randomNumber={randomNumber}
+              defaultDirection={defaultDirection}
+            />
+          ) : (
+            "No words in the dictionary"
+          )}
+        </Box>
+      </Container>
+    </Box>
   );
 }

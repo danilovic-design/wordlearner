@@ -3,7 +3,6 @@ import Card from "@mui/material/Card";
 import { useNavigate } from "react-router-dom";
 import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,6 +10,10 @@ import Menu from "@mui/material/Menu";
 import Box from "@mui/material/Box";
 import ConfirmDeleteDictionary from "./confirmdeletedictionary/Confirmdeletedictionary";
 import NewWordModal from "./newwordmodal/Newwordmodal";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 
 export default function Dictionary({
   handleConfirmDeletion,
@@ -47,14 +50,27 @@ export default function Dictionary({
           }
           title={`${data.firstLang} - ${data.secondLang}`}
           subheader={`Contains ${data.words.length} words`}
+          titleTypographyProps={{ variant: "h6" }}
         />
-        <CardActions>
-          <Button size="small" onClick={handleOpenWord}>
-            Add a new word
-          </Button>
-          <Button size="small" onClick={() => navigate(`/test/${data.dictId}`)}>
-            Start a test
-          </Button>
+        <CardActions disableSpacing>
+          <Stack
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            spacing={6}
+          >
+            <Chip
+              label="Add a new word"
+              onClick={handleOpenWord}
+              variant="outlined"
+              icon={<AddCircleIcon />}
+            />
+            <Chip
+              label="Start a word test"
+              onClick={() => navigate(`/test/${data.dictId}`)}
+              icon={<PlayCircleFilledWhiteIcon />}
+            />
+          </Stack>
         </CardActions>
         <Menu
           id="menu-appbar"

@@ -4,6 +4,9 @@ import { AuthProvider } from "./contexts/Authcontext";
 import { DataProvider } from "./contexts/Datacontext";
 import { StateProvider } from "./contexts/Statecontext";
 import Layout from "./layout/Layout";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({});
 
 function App() {
   return (
@@ -11,7 +14,9 @@ function App() {
       <StateProvider>
         <AuthProvider>
           <DataProvider>
-            <Layout />
+            <ThemeProvider theme={theme}>
+              <Layout />
+            </ThemeProvider>
           </DataProvider>
         </AuthProvider>
       </StateProvider>
