@@ -17,7 +17,6 @@ export default function Dictionaries() {
   const handleCloseDictionary = () => setNewDictionaryOpen(false);
   const [newWordOpen, setNewWordOpen] = React.useState(false);
   const handleOpenWord = () => {
-    console.log("open it");
     setNewWordOpen(true);
   };
   const handleCloseWord = () => setNewWordOpen(false);
@@ -58,6 +57,7 @@ export default function Dictionaries() {
           handleCloseWord={handleCloseWord}
         />
       ))}
+      {userDictionaries.length === 0 ? "No current dictionaries" : null}
 
       <Divider />
 

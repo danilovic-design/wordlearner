@@ -1,8 +1,4 @@
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import Container from "@mui/material/Container";
-import Link from "@mui/material/Link";
-import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -12,7 +8,6 @@ import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { deleteWord } from "../../../database/dbfunctions";
@@ -31,26 +26,28 @@ const ExpandMore = styled((props) => {
 export default function TestCard({
   expanded,
   handleExpandClick,
-  servedFirst,
-  getRandomWord,
-  servedSecond,
   dictId,
   allDictionaryData,
   userId,
-  wordData,
+  wordList,
+  randomNumber,
+  getRandomNumber,
+  defaultDirection,
 }) {
   const handleDeleteWordSubmit = () => {
     let payload = {
       dictId: dictId,
       userId: userId,
-      wordData: wordData,
+      wordData: wordList[randomNumber],
       userDictionaries: allDictionaryData,
     };
     deleteWord(payload).then(() => {
       console.log("New dictionary submit");
-      getRandomWord();
     });
   };
+  React.useEffect(() => {
+    console.log("updated");
+  });
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -59,7 +56,11 @@ export default function TestCard({
             <DeleteIcon />
           </IconButton>
         }
-        title={`${servedFirst}`}
+        title={
+          defaultDirection
+            ? wordList[randomNumber].firstLang
+            : wordList[randomNumber].secondLang
+        }
       />
 
       <CardActions disableSpacing>
@@ -75,10 +76,14 @@ export default function TestCard({
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <Typography paragraph>{servedSecond}</Typography>
+          <Typography paragraph>
+            {defaultDirection
+              ? wordList[randomNumber].secondLang
+              : wordList[randomNumber].firstLang}
+          </Typography>
         </CardContent>
       </Collapse>
-      <Button onClick={getRandomWord}>Guessed it</Button>
+      <Button onClick={getRandomNumber}>Guessed it</Button>
     </Card>
   );
 }

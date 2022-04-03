@@ -3,18 +3,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Link as RouterLink, useParams } from "react-router-dom";
 import { DataContext } from "../../contexts/Datacontext";
 import TestCard from "./testcard/Testcard";
@@ -28,30 +18,11 @@ export default function Tester() {
   const [expanded, setExpanded] = React.useState(false);
   const [wordList, setWordList] = React.useState([]);
   const [dictData, setDictData] = React.useState({});
-  const [allDictionaryData, setAllDictionaryData] = React.useState({});
-  const [servedFirst, setServedFirst] = React.useState("");
-  const [servedSecond, setServedSecond] = React.useState("");
+  const [allDictionaryData, setAllDictionaryData] = React.useState([]);
   const [defaultDirection, setDefaultDirection] = React.useState(true);
   const [randomNumber, setRandomNumber] = React.useState(0);
-  const [currentWord, setCurrentWord] = React.useState("");
 
-  React.useEffect(() => {
-    setAllDictionaryData(storedDictionaryData);
-    if (storedDictionaryData.length > 0) {
-      let filteredDictionary = storedDictionaryData.filter((dict) => {
-        return dict.dictId === dictId;
-      });
-      setDictData(filteredDictionary[0]);
-      setWordList(filteredDictionary[0].words);
-      getRandomWord();
-    }
-  }, [storedDictionaryData, uid, wordList]);
-
-  React.useEffect(() => {
-    getRandomWord();
-  }, [defaultDirection]);
-
-  const getRandomNumber = () => {
+  const getRandomNumber = React.useCallback(() => {
     let maxWords = wordList.length;
     let createdRandomNumber = Math.floor(Math.random() * maxWords);
     if (maxWords > 1) {
@@ -59,17 +30,12 @@ export default function Tester() {
         createdRandomNumber = Math.floor(Math.random() * maxWords);
       }
     }
+    console.log("random number is", createdRandomNumber);
     setRandomNumber(createdRandomNumber);
-  };
+  });
 
-  const handleSwapDirections = () => {
-    defaultDirection ? setDefaultDirection(false) : setDefaultDirection(true);
-  };
-
-  const getRandomWord = () => {
-    console.log("Getting a random word");
+  /*const getRandomWord = React.useCallback(() => {
     getRandomNumber();
-    console.log(wordList);
     if (wordList.length > 0) {
       if (defaultDirection) {
         setServedFirst(wordList[randomNumber].firstLang);
@@ -80,6 +46,33 @@ export default function Tester() {
       }
       setCurrentWord(wordList[randomNumber]);
     }
+  });*/
+
+  React.useEffect(() => {
+    setAllDictionaryData(storedDictionaryData);
+  }, [storedDictionaryData]);
+
+  React.useEffect(() => {
+    if (allDictionaryData.length > 0) {
+      let filteredDictionary = allDictionaryData.filter((dict) => {
+        return dict.dictId === dictId;
+      });
+      setDictData(filteredDictionary[0]);
+      setWordList(filteredDictionary[0].words);
+      console.log("Stored dictionary data is now set");
+      //getRandomNumber();
+      //getRandomWord();
+    } else {
+      console.log("Stored dictionary data is empty");
+    }
+  }, [allDictionaryData, dictId]);
+
+  React.useEffect(() => {
+    getRandomNumber();
+  }, [wordList]);
+
+  const handleSwapDirections = () => {
+    defaultDirection ? setDefaultDirection(false) : setDefaultDirection(true);
   };
 
   const handleExpandClick = () => {
@@ -102,17 +95,17 @@ export default function Tester() {
         <Button onClick={handleSwapDirections}>Swap languages</Button>
       </Box>
       <Box>
-        {servedFirst ? (
+        {wordList.length > 0 ? (
           <TestCard
             expanded={expanded}
             handleExpandClick={handleExpandClick}
-            servedFirst={servedFirst}
-            servedSecond={servedSecond}
-            getRandomWord={getRandomWord}
             dictId={dictId}
             allDictionaryData={allDictionaryData}
             userId={uid}
-            wordData={currentWord}
+            wordList={wordList}
+            getRandomNumber={getRandomNumber}
+            randomNumber={randomNumber}
+            defaultDirection={defaultDirection}
           />
         ) : (
           "No words in the dictionary"

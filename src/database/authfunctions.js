@@ -6,6 +6,8 @@ import {
   browserSessionPersistence,
   createUserWithEmailAndPassword,
   signOut,
+  updatePassword,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 export const signUp = (email, password) => {
@@ -23,4 +25,14 @@ export const signIn = async (email, password, persistence) => {
 
 export const logOut = () => {
   return signOut(auth);
+};
+
+export const changeUserPassword = (newPassword) => {
+  const user = auth.currentUser;
+
+  return updatePassword(user, newPassword);
+};
+
+export const resetPassword = (email) => {
+  return sendPasswordResetEmail(auth, email);
 };

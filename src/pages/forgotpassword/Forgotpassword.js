@@ -3,16 +3,14 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { signIn } from "../../database/authfunctions";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
+import { resetPassword } from "../../database/authfunctions";
 
 /*function delCopyright(props) {
   return (
@@ -36,16 +34,11 @@ const theme = createTheme();
 
 export default function Login() {
   const navigate = useNavigate();
-  const [persistence, setPersistence] = React.useState(false);
 
-  const handlePersistenceChange = (event) => {
-    setPersistence(event.currentTarget.checked);
-  };
-
-  const handleLogin = (event) => {
+  const handleResetPassword = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signIn(data.get("email"), data.get("password"), persistence).then(() => {
+    resetPassword(data.get("email")).then(() => {
       navigate("/");
     });
   };
@@ -63,11 +56,11 @@ export default function Login() {
           }}
         >
           <Typography component="h1" variant="h5">
-            Log in
+            Reset your password
           </Typography>
           <Box
             component="form"
-            onSubmit={handleLogin}
+            onSubmit={handleResetPassword}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -81,48 +74,24 @@ export default function Login() {
               autoComplete="email"
               autoFocus
             />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  value="remember"
-                  color="primary"
-                  checked={persistence}
-                  onChange={handlePersistenceChange}
-                />
-              }
-              label="Remember me"
-            />
+
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Get password reset email
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link
-                  component={BrowserLink}
-                  to={"/resetpassword"}
-                  variant="body2"
-                >
-                  Forgot password?
+                <Link component={BrowserLink} to={"/login"} variant="body2">
+                  "Do you have an account? Sign In"
                 </Link>
               </Grid>
               <Grid item>
                 <Link component={BrowserLink} to={"/signup"} variant="body2">
-                  "Don't have an account? Sign Up"
+                  "Don't you have an account? Sign Up"
                 </Link>
               </Grid>
             </Grid>

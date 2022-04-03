@@ -10,13 +10,9 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import { Link as BrowserLink } from "react-router-dom";
+import { changeUserPassword } from "../../database/authfunctions";
 
 export default function Profile() {
-  const handleSubmit = (submitEvent) => {
-    submitEvent.preventDefault();
-    console.log("Ok");
-    handleClick();
-  };
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -29,6 +25,16 @@ export default function Profile() {
     }
 
     setOpen(false);
+  };
+
+  const handleNewPasswordSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    changeUserPassword(data.get("password"))
+      .then(() => {
+        handleClick();
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -44,17 +50,12 @@ export default function Profile() {
         </Link>
         <Typography color="text.primary">Manage your account</Typography>
       </Breadcrumbs>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
+      <Box
+        component="form"
+        onSubmit={handleNewPasswordSubmit}
+        noValidate
+        sx={{ mt: 1 }}
+      >
         <TextField
           margin="normal"
           required
