@@ -64,7 +64,9 @@ export default function TestCard({
       />
 
       <CardActions disableSpacing={true} sx={{ justifyContent: "flex-end" }}>
-        <Typography>Súgó</Typography>
+        <Typography variant="subtitle2" component="div" sx={{ color: "grey" }}>
+          Click for hint
+        </Typography>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
