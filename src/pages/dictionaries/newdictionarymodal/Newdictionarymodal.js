@@ -23,6 +23,8 @@ export default function NewDictionaryModal({
   handleCloseDictionary,
   newDictionaryOpen,
   userDictionaries,
+  setDictionaryErrorOpen,
+  setNewDictionaryAlertOpen,
 }) {
   let { uid } = React.useContext(AuthContext);
 
@@ -35,9 +37,15 @@ export default function NewDictionaryModal({
       userDictionaries: userDictionaries,
       userId: uid,
     };
-    saveDict(saveData).then(() => {
-      handleCloseDictionary();
-    });
+    saveDict(saveData)
+      .then(() => {
+        setNewDictionaryAlertOpen(true);
+        handleCloseDictionary();
+      })
+      .catch(() => {
+        setDictionaryErrorOpen(true);
+        handleCloseDictionary();
+      });
   };
   return (
     <div>
@@ -68,6 +76,7 @@ export default function NewDictionaryModal({
               id="firstlanguage"
               label="First language"
               name="firstlanguage"
+              color="secondary"
             />
             <TextField
               margin="normal"
@@ -76,6 +85,7 @@ export default function NewDictionaryModal({
               id="secondlanguage"
               label="Second language"
               name="secondlanguage"
+              color="secondary"
             />
             <Button
               type="submit"

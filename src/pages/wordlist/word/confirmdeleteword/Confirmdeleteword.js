@@ -24,6 +24,8 @@ export default function ConfirmDeleteWord({
   dictId,
   wordData,
   allDictionaryData,
+  setDeleteWordAlertOpen,
+  setWordErrorOpen,
 }) {
   const handleDeleteWordSubmit = () => {
     let payload = {
@@ -32,10 +34,15 @@ export default function ConfirmDeleteWord({
       wordData: wordData,
       userDictionaries: allDictionaryData,
     };
-    deleteWord(payload).then(() => {
-      console.log("New dictionary submit");
-      handleCloseDeletion();
-    });
+    deleteWord(payload)
+      .then(() => {
+        setDeleteWordAlertOpen(true);
+        handleCloseDeletion();
+      })
+      .catch(() => {
+        setWordErrorOpen(true);
+        handleCloseDeletion();
+      });
   };
   return (
     <div>

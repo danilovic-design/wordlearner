@@ -11,7 +11,14 @@ import DeleteWordModal from "./confirmdeleteword/Confirmdeleteword";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
-export default function Word({ wordData, userId, dictId, allDictionaryData }) {
+export default function Word({
+  wordData,
+  userId,
+  dictId,
+  allDictionaryData,
+  setDeleteWordAlertOpen,
+  setWordErrorOpen,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -95,6 +102,8 @@ export default function Word({ wordData, userId, dictId, allDictionaryData }) {
         dictId={dictId}
         allDictionaryData={allDictionaryData}
         firstLang={wordData.firstLang}
+        setDeleteWordAlertOpen={setDeleteWordAlertOpen}
+        setWordErrorOpen={setWordErrorOpen}
       ></DeleteWordModal>
     </Card>
   );

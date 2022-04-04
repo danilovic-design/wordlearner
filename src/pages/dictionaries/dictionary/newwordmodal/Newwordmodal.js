@@ -24,6 +24,8 @@ export default function NewWordModal({
   data,
   userId,
   userDictionaries,
+  setNewWordAlertOpen,
+  setWordErrorOpen,
 }) {
   const handleNewWordSubmit = (event) => {
     event.preventDefault();
@@ -36,9 +38,17 @@ export default function NewWordModal({
       secondLang: formData.get("secondlanguage"),
     };
 
-    saveNewWord(payload).then(() => {
-      handleCloseWord();
-    });
+    saveNewWord(payload)
+      .then(() => {
+        console.log("Saving new word");
+        setNewWordAlertOpen(true);
+        handleCloseWord();
+      })
+      .catch((err) => {
+        console.log(err);
+        setWordErrorOpen(true);
+        handleCloseWord();
+      });
   };
 
   return (
@@ -69,6 +79,7 @@ export default function NewWordModal({
               id="firstlanguage"
               label={`In ${data.firstLang}`}
               name="firstlanguage"
+              color="secondary"
             />
             <TextField
               margin="normal"
@@ -77,6 +88,7 @@ export default function NewWordModal({
               id="secondlanguage"
               label={`In ${data.secondLang}`}
               name="secondlanguage"
+              color="secondary"
             />
             <Button
               type="submit"

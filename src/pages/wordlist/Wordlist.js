@@ -15,6 +15,7 @@ import { BreadCrumbTypographyStyle } from "../../styles/Main";
 import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
 import HomeIcon from "@mui/icons-material/Home";
 import Stack from "@mui/material/Stack";
+import WordlistSnackbars from "./wordlistsnackbars/Wordlistsnackbars";
 
 export default function Words() {
   const { dictId } = useParams();
@@ -25,7 +26,15 @@ export default function Words() {
   const [dictData, setDictData] = useState({});
   const [allDictionaryData, setAllDictionaryData] = useState();
   const [newWordOpen, setNewWordOpen] = useState(false);
+  const [newWordAlertOpen, setNewWordAlertOpen] = useState(false);
+  const [deleteWordAlertOpen, setDeleteWordAlertOpen] = useState(false);
+  const [wordErrorOpen, setWordErrorOpen] = useState(false);
   const navigate = useNavigate();
+
+  const handleCloseAlert = () => {
+    setNewWordAlertOpen(false);
+    setDeleteWordAlertOpen(false);
+  };
 
   useEffect(() => {
     if (storedDictionaryData.length > 0) {
@@ -84,6 +93,8 @@ export default function Words() {
           data={dictData}
           userId={userId}
           userDictionaries={allDictionaryData}
+          setNewWordAlertOpen={setNewWordAlertOpen}
+          setWordErrorOpen={setWordErrorOpen}
         />
         <Divider />
         <Box>
@@ -95,6 +106,8 @@ export default function Words() {
                 dictId={dictId}
                 userId={uid}
                 allDictionaryData={allDictionaryData}
+                setDeleteWordAlertOpen={setDeleteWordAlertOpen}
+                setWordErrorOpen={setWordErrorOpen}
               />
             ))}
           </Stack>
@@ -113,6 +126,12 @@ export default function Words() {
           </Button>
         </Box>
       </Container>
+      <WordlistSnackbars
+        handleCloseAlert={handleCloseAlert}
+        deleteWordAlertOpen={deleteWordAlertOpen}
+        newWordAlertOpen={newWordAlertOpen}
+        wordErrorOpen={wordErrorOpen}
+      />
     </Box>
   );
 }

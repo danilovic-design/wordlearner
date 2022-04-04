@@ -24,17 +24,28 @@ export default function ConfirmDeleteDictionary({
   setDict2delete,
   userId,
   userDictionaries,
+  setDeleteDictionaryAlertOpen,
+  setDictionaryErrorOpen,
 }) {
   // console.log("[+] - Confirm delete dictionary, userid", userId);
 
   const handleDeleteDict = () => {
     // console.log("Deleting", dict2delete);
 
-    deleteDict(userDictionaries, dict2delete, userId).then(() => {
-      setDict2delete("");
-      handleCloseDeletion();
-      //   console.log("Dict is deleted");
-    });
+    deleteDict(userDictionaries, dict2delete, userId)
+      .then(() => {
+        console.log("Then ok");
+        setDict2delete("");
+        setDeleteDictionaryAlertOpen(true);
+        handleCloseDeletion();
+        //   console.log("Dict is deleted");
+      })
+      .catch((err) => {
+        console.log("Catch fired");
+        console.log(err);
+        setDictionaryErrorOpen(true);
+        handleCloseDeletion();
+      });
   };
   const handleGoBack = () => {
     setDict2delete("");

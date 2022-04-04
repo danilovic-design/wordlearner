@@ -14,37 +14,57 @@ import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
 import { mainBoxStyle } from "../../styles/Main";
 import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
+import DictionarySnackbars from "./dictionarysnackbars/Dictionarysnackbars";
 
 export default function Dictionaries() {
-  // Primary states
+  /*  ----------------
+    Primary states
+      ---------------- */
   const navigate = useNavigate();
   const { storedDictionaryData } = useContext(DataContext);
   const { uid } = useContext(AuthContext);
   const [userDictionaries, setUserDictionaries] = React.useState([]);
   const [userId, setUserId] = React.useState(null);
-  // New dictionary related
+  /*  ----------------
+    New dictionary related states
+      ---------------- */
   const [newDictionaryOpen, setNewDictionaryOpen] = React.useState(false);
   const handleOpenDictionary = () => setNewDictionaryOpen(true);
   const handleCloseDictionary = () => setNewDictionaryOpen(false);
-  // New word related
+  /*  ----------------
+    New word related states
+      ---------------- */
   const [newWordOpen, setNewWordOpen] = React.useState(false);
   const handleOpenWord = () => {
     setNewWordOpen(true);
   };
   const handleCloseWord = () => setNewWordOpen(false);
-  // Delete word related
+
+  /*  ----------------
+    Delete word related
+      ---------------- */
   const [confirmDeletion, setConfirmDeletion] = React.useState(false);
-  // Delete dictionary related
+  /*  ----------------
+    Delete dictionary related
+      ---------------- */
   const [dict2delete, setDict2delete] = React.useState("");
   const handleConfirmDeletion = () => setConfirmDeletion(true);
   const handleCloseDeletion = () => setConfirmDeletion(false);
-
-  const [alertOpen, setAlertOpen] = React.useState(false);
+  /*  ----------------
+    Alerts related states
+      ---------------- */
+  const [newWordAlertOpen, setNewWordAlertOpen] = React.useState(false);
+  const [newDictionaryAlertOpen, setNewDictionaryAlertOpen] =
+    React.useState(false);
+  const [deleteDictionaryAlertOpen, setDeleteDictionaryAlertOpen] =
+    React.useState(false);
+  const [dictionaryErrorOpen, setDictionaryErrorOpen] = React.useState(false);
 
   const handleCloseAlert = () => {
-    setAlertOpen(false);
+    setNewWordAlertOpen(false);
+    setNewDictionaryAlertOpen(false);
+    setDeleteDictionaryAlertOpen(false);
+    setDictionaryErrorOpen(false);
   };
 
   useEffect(() => {
@@ -71,16 +91,21 @@ export default function Dictionaries() {
             <Dictionary
               key={`userdicts${index}`}
               data={data}
-              userDictionaries={userDictionaries}
-              handleConfirmDeletion={handleConfirmDeletion}
               dict2delete={dict2delete}
-              setDict2delete={setDict2delete}
-              handleCloseDeletion={handleCloseDeletion}
               confirmDeletion={confirmDeletion}
-              userId={userId}
-              newWordOpen={newWordOpen}
+              handleCloseDeletion={handleCloseDeletion}
+              handleConfirmDeletion={handleConfirmDeletion}
               handleOpenWord={handleOpenWord}
               handleCloseWord={handleCloseWord}
+              newWordAlertOpen={newWordAlertOpen}
+              handleCloseAlert={handleCloseAlert}
+              newWordOpen={newWordOpen}
+              setDict2delete={setDict2delete}
+              setDictionaryErrorOpen={setDictionaryErrorOpen}
+              setNewWordAlertOpen={setNewWordAlertOpen}
+              setDeleteDictionaryAlertOpen={setDeleteDictionaryAlertOpen}
+              userDictionaries={userDictionaries}
+              userId={userId}
             />
           ))}
         </Stack>
@@ -97,24 +122,20 @@ export default function Dictionaries() {
           Create a new dictionary
         </Button>
 
-        <Snackbar
-          open={alertOpen}
-          autoHideDuration={6000}
-          onClose={handleCloseAlert}
-        >
-          <Alert
-            onClose={handleCloseAlert}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            New dictionary created
-          </Alert>
-        </Snackbar>
+        <DictionarySnackbars
+          newWordAlertOpen={newWordAlertOpen}
+          newDictionaryAlertOpen={newDictionaryAlertOpen}
+          deleteDictionaryAlertOpen={deleteDictionaryAlertOpen}
+          handleCloseAlert={handleCloseAlert}
+          dictionaryErrorOpen={dictionaryErrorOpen}
+        />
 
         <NewDictionaryModal
           handleCloseDictionary={handleCloseDictionary}
           newDictionaryOpen={newDictionaryOpen}
           userDictionaries={userDictionaries}
+          setNewDictionaryAlertOpen={setNewDictionaryAlertOpen}
+          setDictionaryErrorOpen={setDictionaryErrorOpen}
         />
       </Container>
     </Box>

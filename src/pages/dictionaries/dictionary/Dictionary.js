@@ -27,6 +27,11 @@ export default function Dictionary({
   handleOpenWord,
   handleCloseWord,
   newWordOpen,
+  newWordAlertOpen,
+  handleCloseAlert,
+  setDictionaryErrorOpen,
+  setNewWordAlertOpen,
+  setDeleteDictionaryAlertOpen,
 }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -114,6 +119,8 @@ export default function Dictionary({
         setDict2delete={setDict2delete}
         userDictionaries={userDictionaries}
         userId={userId}
+        setDictionaryErrorOpen={setDictionaryErrorOpen}
+        setDeleteDictionaryAlertOpen={setDeleteDictionaryAlertOpen}
       />
 
       <NewWordModal
@@ -122,6 +129,10 @@ export default function Dictionary({
         data={data}
         userId={userId}
         userDictionaries={userDictionaries}
+        handleCloseAlert={handleCloseAlert}
+        newWordAlertOpen={newWordAlertOpen}
+        setWordErrorOpen={setDictionaryErrorOpen}
+        setNewWordAlertOpen={setNewWordAlertOpen}
       />
     </Box>
   );
