@@ -4,14 +4,9 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
-export default function ChangePasswordBox({ handleNewPasswordSubmit }) {
+export default function ChangePasswordBox({ handleNewPasswordSubmit, error }) {
   return (
-    <Box
-      component="form"
-      onSubmit={handleNewPasswordSubmit}
-      noValidate
-      sx={{ mt: 1 }}
-    >
+    <Box component="form" onSubmit={handleNewPasswordSubmit} sx={{ mt: 1 }}>
       <Typography component="h1" variant="h5">
         Change password
       </Typography>
@@ -24,6 +19,8 @@ export default function ChangePasswordBox({ handleNewPasswordSubmit }) {
         type="password"
         id="password"
         color="secondary"
+        error={error ? true : false}
+        helperText={error ? error : null}
       />
       <TextField
         margin="normal"
@@ -34,6 +31,8 @@ export default function ChangePasswordBox({ handleNewPasswordSubmit }) {
         type="password"
         id="passwordagain"
         color="secondary"
+        error={error ? true : false}
+        helperText={error ? error : null}
       />
 
       <Button

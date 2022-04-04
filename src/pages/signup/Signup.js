@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
 import { Link as BrowserLink } from "react-router-dom";
 import { mainBoxStyle } from "../../styles/Main";
+import { errorText } from "../../database/errorcodes";
 
 /*function Copyright(props) {
   return (
@@ -36,20 +37,22 @@ const theme = createTheme();
 
 export default function Signup() {
   const navigate = useNavigate();
+
+  const [error, setError] = React.useState(null);
+
   const handleSignupSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
     signUp(data.get("email"), data.get("password"))
-      .then((userCredential) => {
+      .then(() => {
         navigate("/");
       })
 
-      .catch((error) => {
-        console.log(error);
+      .catch((firebaseError) => {
+        setError(errorText(firebaseError.code));
       });
   };
-  console.log("[+] - Signup element loaded");
 
   return (
     <ThemeProvider theme={theme}>
@@ -67,12 +70,7 @@ export default function Signup() {
             <Typography component="h1" variant="h5">
               Sign up
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSignupSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleSignupSubmit} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -82,7 +80,10 @@ export default function Signup() {
                 name="email"
                 autoComplete="email"
                 color="secondary"
+                variant="filled"
                 autoFocus
+                error={error ? true : false}
+                helperText={error ? error : null}
               />
               <TextField
                 margin="normal"
@@ -93,6 +94,9 @@ export default function Signup() {
                 color="secondary"
                 type="password"
                 id="password"
+                variant="filled"
+                error={error ? true : false}
+                helperText={error ? error : null}
               />
               <TextField
                 margin="normal"
@@ -103,6 +107,9 @@ export default function Signup() {
                 type="password"
                 color="secondary"
                 id="passwordagain"
+                variant="filled"
+                error={error ? true : false}
+                helperText={error ? error : null}
               />
 
               <Button

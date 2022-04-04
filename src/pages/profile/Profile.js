@@ -14,17 +14,18 @@ import ChangePasswordBox from "./changepasswordbox/Changepasswordbox";
 import ReloginBox from "./reloginbox/Reloginbox";
 import { signIn } from "../../database/authfunctions";
 import LoginAction from "./loginaction/Loginaction";
+import { errorText } from "../../database/errorcodes";
 
 export default function Profile() {
   const navigate = useNavigate();
   const [updatedPasswordAlertOpen, setUpdatedPasswordAlertOpen] =
     React.useState(false);
-  const [updatedPasswordAlertError, setUpdatedPasswordAlertError] =
-    React.useState(false);
   const [reloginState, setReloginState] = React.useState(0);
+  const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     setReloginState(0);
+    setError(null);
   }, []);
 
   /*const handleClick = () => {
@@ -41,7 +42,6 @@ export default function Profile() {
 
   const handlePasswordAlertClose = () => {
     setUpdatedPasswordAlertOpen(false);
-    setUpdatedPasswordAlertError(false);
   };
 
   const handleNewPasswordSubmit = (event) => {
@@ -49,11 +49,12 @@ export default function Profile() {
     const data = new FormData(event.currentTarget);
     changeUserPassword(data.get("password"))
       .then(() => {
+        setError(null);
         setUpdatedPasswordAlertOpen(true);
         setReloginState(0);
       })
-      .catch((err) => {
-        setUpdatedPasswordAlertError(true);
+      .catch((firebaseError) => {
+        setError(errorText(firebaseError.code));
       });
   };
 
@@ -63,10 +64,11 @@ export default function Profile() {
     let persistence = false;
     signIn(data.get("email"), data.get("password"), persistence)
       .then(() => {
+        setError(null);
         setReloginState(2);
       })
-      .catch(() => {
-        setUpdatedPasswordAlertError(true);
+      .catch((firebaseError) => {
+        setError(errorText(firebaseError.code));
       });
   };
 
@@ -75,11 +77,14 @@ export default function Profile() {
       return <LoginAction setReloginState={setReloginState} />;
     }
     if (actionState === 1) {
-      return <ReloginBox handleLogin={handleLogin} />;
+      return <ReloginBox handleLogin={handleLogin} error={error} />;
     }
     if (actionState === 2) {
       return (
-        <ChangePasswordBox handleNewPasswordSubmit={handleNewPasswordSubmit} />
+        <ChangePasswordBox
+          handleNewPasswordSubmit={handleNewPasswordSubmit}
+          error={error}
+        />
       );
     }
   };
@@ -102,7 +107,6 @@ export default function Profile() {
       </Container>
       <ProfileSnackbars
         updatedPasswordAlertOpen={updatedPasswordAlertOpen}
-        updatedPasswordAlertError={updatedPasswordAlertError}
         handlePasswordAlertClose={handlePasswordAlertClose}
       />
     </Box>

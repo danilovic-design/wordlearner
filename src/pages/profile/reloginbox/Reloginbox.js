@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-export default function ReloginBox({ navigate, handleLogin }) {
+export default function ReloginBox({ handleLogin, error }) {
   return (
     <Box
       sx={{
@@ -17,7 +17,7 @@ export default function ReloginBox({ navigate, handleLogin }) {
       <Typography component="h1" variant="h5">
         Log in
       </Typography>
-      <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
         <TextField
           margin="normal"
           required
@@ -28,6 +28,8 @@ export default function ReloginBox({ navigate, handleLogin }) {
           autoComplete="email"
           color="secondary"
           autoFocus
+          error={error ? true : false}
+          helperText={error ? error : null}
         />
         <TextField
           margin="normal"
@@ -39,6 +41,8 @@ export default function ReloginBox({ navigate, handleLogin }) {
           color="secondary"
           id="password"
           autoComplete="current-password"
+          error={error ? true : false}
+          helperText={error ? error : null}
         />
         <Button
           type="submit"

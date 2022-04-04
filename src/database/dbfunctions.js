@@ -3,7 +3,7 @@ import { db } from "./firebaseconfig";
 
 /**
  *  Collection name in database. The intire database is stored inside one collection
- * @returns String variable
+ * @returns {String} variable
  */
 
 const databaseCollection = "data";

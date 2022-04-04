@@ -66,12 +66,7 @@ export default function NewWordModal({
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Add a new word to this dictionary.
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleNewWordSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleNewWordSubmit} sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required

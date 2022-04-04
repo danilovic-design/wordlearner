@@ -4,7 +4,6 @@ import Snackbar from "@mui/material/Snackbar";
 
 export default function ProfileSnackbars({
   updatedPasswordAlertOpen,
-  updatedPasswordAlertError,
   handlePasswordAlertClose,
 }) {
   return (
@@ -20,20 +19,6 @@ export default function ProfileSnackbars({
           sx={{ width: "100%" }}
         >
           Password successfully updated
-        </Alert>
-      </Snackbar>
-
-      <Snackbar
-        open={updatedPasswordAlertError}
-        autoHideDuration={4000}
-        onClose={handlePasswordAlertClose}
-      >
-        <Alert
-          onClose={handlePasswordAlertClose}
-          severity="error"
-          sx={{ width: "100%" }}
-        >
-          Some problem turned up
         </Alert>
       </Snackbar>
     </React.Fragment>

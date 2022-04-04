@@ -14,6 +14,7 @@ import { signIn } from "../../database/authfunctions";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
 import { mainBoxStyle } from "../../styles/Main";
+import { errorText } from "../../database/errorcodes";
 
 /*function delCopyright(props) {
   return (
@@ -43,12 +44,18 @@ export default function Login() {
     setPersistence(event.currentTarget.checked);
   };
 
+  const [error, setError] = React.useState(null);
+
   const handleLogin = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    signIn(data.get("email"), data.get("password"), persistence).then(() => {
-      navigate("/");
-    });
+    signIn(data.get("email"), data.get("password"), persistence)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((firebaseError) => {
+        setError(errorText(firebaseError.code));
+      });
   };
 
   return (
@@ -67,12 +74,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Log in
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleLogin}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -83,6 +85,9 @@ export default function Login() {
                 autoComplete="email"
                 color="secondary"
                 autoFocus
+                variant="filled"
+                error={error ? true : false}
+                helperText={error ? error : null}
               />
               <TextField
                 margin="normal"
@@ -93,7 +98,10 @@ export default function Login() {
                 type="password"
                 color="secondary"
                 id="password"
+                variant="filled"
                 autoComplete="current-password"
+                error={error ? true : false}
+                helperText={error ? error : null}
               />
               <FormControlLabel
                 control={

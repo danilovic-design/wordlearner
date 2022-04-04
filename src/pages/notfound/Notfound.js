@@ -5,18 +5,23 @@ import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
+import { mainBoxStyle } from "../../styles/Main";
 
 export default function Notfound() {
   const navigate = useNavigate();
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box>
-        <Typography color="text.primary">Not found this page</Typography>
-        <Button onClick={() => navigate("/")} fullWidth>
-          Go back to homepage
-        </Button>
-      </Box>
-    </Container>
+    <Box sx={mainBoxStyle}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box pt={3}>
+          <Typography pb={2} color="text.primary" align="center" variant="h6">
+            The requested page is not found
+          </Typography>
+          <Button onClick={() => navigate("/")} fullWidth>
+            Go back to homepage
+          </Button>
+        </Box>
+      </Container>
+    </Box>
   );
 }

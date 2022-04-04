@@ -66,7 +66,6 @@ export default function NewDictionaryModal({
           <Box
             component="form"
             onSubmit={handleNewDictionarySubmit}
-            noValidate
             sx={{ mt: 1 }}
           >
             <TextField
