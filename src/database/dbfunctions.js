@@ -1,6 +1,19 @@
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 
+/**
+ *  Collection name in database. The intire database is stored inside one collection
+ * @returns String variable
+ */
+
+const databaseCollection = "data";
+
+/**
+ * It may only be called by saveDict function
+ * @param {Object} data - must contain <Wordobject> data
+ * @returns a Promise from the database
+ */
+
 const newDict = (data) => {
   let newDictData = {
     firstLang: data.firstLang,
@@ -9,11 +22,15 @@ const newDict = (data) => {
     dictId: `${data.firstLang.toLowerCase()}${data.secondLang.toLowerCase()}`,
   };
   let dbData = { userDictionaries: [newDictData] };
-  console.log("[+] - Saving dict to user", data.userId);
 
-  return setDoc(doc(db, "data", data.userId), dbData);
+  return setDoc(doc(db, databaseCollection, data.userId), dbData);
 };
 
+/**
+ * It may only be called by saveDict function
+ * @param {Object} data - must contain <Wordobject> data
+ * @returns a Promise from the database
+ */
 const existingDict = (data) => {
   let newDictData = {
     firstLang: data.firstLang,
@@ -24,19 +41,19 @@ const existingDict = (data) => {
   let updatedDictionaries = [...data.userDictionaries];
   updatedDictionaries.push(newDictData);
   let dbData = { userDictionaries: updatedDictionaries };
-  console.log("[+] - Updating dict to user", data.userId);
-  console.log(dbData);
-
-  return setDoc(doc(db, "data", data.userId), dbData);
+  return setDoc(doc(db, databaseCollection, data.userId), dbData);
 };
 
+/**
+ * The function saves a new <Dictionary> to the database.
+ * Handles two other functions that handle either the case of empty DB
+ * or already having a dictionary
+ * @param {Object} data - <WordObject>
+ */
 export const saveDict = (data) => {
-  console.log("[+] - saveDict function, dictionaries", data);
   if (data.userDictionaries.length !== 0) {
-    console.log("[+] - Adding to existing DB");
     return existingDict(data);
   } else {
-    console.log("[+] - Creating a new dictionary in DB");
     return newDict(data);
   }
 };
@@ -46,7 +63,7 @@ export const deleteDict = (userDictionaries, dict2delete, userId) => {
     return dict.dictId !== dict2delete;
   });
   let saveData = { userDictionaries: newDict };
-  return setDoc(doc(db, "data", userId), saveData);
+  return setDoc(doc(db, databaseCollection, userId), saveData);
 };
 
 export const saveNewWord = ({
@@ -75,7 +92,7 @@ export const saveNewWord = ({
 
   let dbData = { userDictionaries: unchangedDictionaries };
 
-  return setDoc(doc(db, "data", userId), dbData);
+  return setDoc(doc(db, databaseCollection, userId), dbData);
 };
 
 export const deleteWord = ({ userId, dictId, userDictionaries, wordData }) => {
@@ -96,7 +113,7 @@ export const deleteWord = ({ userId, dictId, userDictionaries, wordData }) => {
 
   let dbData = { userDictionaries: unchangedDictionaries };
 
-  return setDoc(doc(db, "data", userId), dbData);
+  return setDoc(doc(db, databaseCollection, userId), dbData);
 };
 
 export const changeWord = ({
@@ -125,5 +142,5 @@ export const changeWord = ({
 
   let dbData = { userDictionaries: unchangedDictionaries };
 
-  return setDoc(doc(db, "data", userId), dbData);
+  return setDoc(doc(db, databaseCollection, userId), dbData);
 };

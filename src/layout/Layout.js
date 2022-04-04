@@ -14,6 +14,7 @@ import UnderConstruction from "../pages/underconstruction/Underconstruction";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { StateContext } from "../contexts/Statecontext";
+import LandingPage from "../pages/landingpage/Landingpage";
 
 const CircularIndeterminate = function () {
   return (
@@ -40,6 +41,14 @@ export default function Layout() {
         <Routes>
           <Route
             path="/"
+            element={
+              <PublicRoute>
+                <LandingPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/dictionaries"
             element={
               <ProtectedRoute>
                 <Dictionaries />

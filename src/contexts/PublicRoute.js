@@ -8,7 +8,7 @@ function PublicRoute({ children, location, ...rest }) {
   return isAuthenticated ? (
     <Navigate
       to={{
-        pathname: "/",
+        pathname: "/dictionary",
         state: { from: location },
       }}
     />
