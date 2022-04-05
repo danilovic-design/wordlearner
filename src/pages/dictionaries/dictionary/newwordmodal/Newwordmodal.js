@@ -75,6 +75,7 @@ export default function NewWordModal({
               label={`In ${data.firstLang}`}
               name="firstlanguage"
               color="secondary"
+              autoComplete="off"
             />
             <TextField
               margin="normal"
@@ -84,6 +85,7 @@ export default function NewWordModal({
               label={`In ${data.secondLang}`}
               name="secondlanguage"
               color="secondary"
+              autoComplete="off"
             />
             <Button
               type="submit"

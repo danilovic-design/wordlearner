@@ -76,6 +76,7 @@ export default function NewDictionaryModal({
               label="First language"
               name="firstlanguage"
               color="secondary"
+              autoComplete="off"
             />
             <TextField
               margin="normal"
@@ -85,6 +86,7 @@ export default function NewDictionaryModal({
               label="Second language"
               name="secondlanguage"
               color="secondary"
+              autoComplete="off"
             />
             <Button
               type="submit"

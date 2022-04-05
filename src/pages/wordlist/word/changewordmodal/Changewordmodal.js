@@ -77,6 +77,7 @@ export default function ChangeWordModal({
               label={shortenTitle(wordData.firstLang)}
               defaultValue={wordData.firstLang}
               name="firstlanguage"
+              autoComplete="off"
             />
             <TextField
               margin="normal"
@@ -86,6 +87,7 @@ export default function ChangeWordModal({
               label={shortenTitle(wordData.secondLang)}
               defaultValue={wordData.secondLang}
               name="secondlanguage"
+              autoComplete="off"
             />
             <Button
               type="submit"
