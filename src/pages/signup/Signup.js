@@ -37,6 +37,7 @@ import { PAGEROOT } from "../../database/deploy";
 const theme = createTheme();
 
 export default function Signup() {
+  const pageText = "Sign up";
   const navigate = useNavigate();
 
   const [error, setError] = React.useState(null);
@@ -69,7 +70,7 @@ export default function Signup() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Sign up
+              {pageText}
             </Typography>
             <Box component="form" onSubmit={handleSignupSubmit} sx={{ mt: 1 }}>
               <TextField
@@ -120,7 +121,7 @@ export default function Signup() {
                 color="secondary"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                {pageText}
               </Button>
               <Grid container>
                 <Grid item xs>

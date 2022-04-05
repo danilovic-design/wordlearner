@@ -38,6 +38,7 @@ import { PAGEROOT } from "../../database/deploy";
 const theme = createTheme();
 
 export default function Login() {
+  const pageText = "Log in";
   const navigate = useNavigate();
   const [persistence, setPersistence] = React.useState(false);
 
@@ -73,7 +74,7 @@ export default function Login() {
             }}
           >
             <Typography component="h1" variant="h5">
-              Log in
+              {pageText}
             </Typography>
             <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
               <TextField
@@ -122,7 +123,7 @@ export default function Login() {
                 sx={{ mt: 3, mb: 2 }}
                 color="secondary"
               >
-                Sign In
+                {pageText}
               </Button>
               <Grid container>
                 <Grid item xs>

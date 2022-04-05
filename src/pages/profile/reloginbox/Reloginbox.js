@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 export default function ReloginBox({ handleLogin, error }) {
+  const pageText = "Log in"
   return (
     <Box
       sx={{
@@ -15,7 +16,7 @@ export default function ReloginBox({ handleLogin, error }) {
       }}
     >
       <Typography component="h1" variant="h5">
-        Log in
+        {pageText}
       </Typography>
       <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
         <TextField
@@ -51,7 +52,7 @@ export default function ReloginBox({ handleLogin, error }) {
           sx={{ mt: 3, mb: 2 }}
           color="secondary"
         >
-          Log In
+         {pageText}
         </Button>
       </Box>
     </Box>
