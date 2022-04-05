@@ -6,7 +6,7 @@ import { db } from "./firebaseconfig";
  * @returns {String} variable
  */
 
-const databaseCollection = "data";
+export const databaseCollection = "data";
 
 /**
  * It may only be called by saveDict function

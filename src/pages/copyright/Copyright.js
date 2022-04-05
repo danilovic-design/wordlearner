@@ -11,7 +11,7 @@ export default function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="/">
+      <Link color="inherit" href="https://danilovic-design.github.io/">
         Danilović-Design
       </Link>{" "}
       {new Date().getFullYear()}
