@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import DictionarySnackbars from "./dictionarysnackbars/Dictionarysnackbars";
 import { PAGEROOT } from "../../database/deploy";
+import NewWordModal from "./dictionary/newwordmodal/Newwordmodal";
 
 export default function Dictionaries() {
   /*  ----------------
@@ -60,6 +61,7 @@ export default function Dictionaries() {
   const [deleteDictionaryAlertOpen, setDeleteDictionaryAlertOpen] =
     React.useState(false);
   const [dictionaryErrorOpen, setDictionaryErrorOpen] = React.useState(false);
+  const [newWordInputDictionary, setNewWordDictionary] = React.useState(null);
 
   const handleCloseAlert = () => {
     setNewWordAlertOpen(false);
@@ -97,16 +99,14 @@ export default function Dictionaries() {
               handleCloseDeletion={handleCloseDeletion}
               handleConfirmDeletion={handleConfirmDeletion}
               handleOpenWord={handleOpenWord}
-              handleCloseWord={handleCloseWord}
               newWordAlertOpen={newWordAlertOpen}
-              handleCloseAlert={handleCloseAlert}
-              newWordOpen={newWordOpen}
               setDict2delete={setDict2delete}
               setDictionaryErrorOpen={setDictionaryErrorOpen}
               setNewWordAlertOpen={setNewWordAlertOpen}
               setDeleteDictionaryAlertOpen={setDeleteDictionaryAlertOpen}
               userDictionaries={userDictionaries}
               userId={userId}
+              setNewWordDictionary={setNewWordDictionary}
             />
           ))}
         </Stack>
@@ -138,6 +138,19 @@ export default function Dictionaries() {
           setNewDictionaryAlertOpen={setNewDictionaryAlertOpen}
           setDictionaryErrorOpen={setDictionaryErrorOpen}
         />
+        {newWordInputDictionary && newWordOpen ? (
+          <NewWordModal
+            data={newWordInputDictionary}
+            handleCloseWord={handleCloseWord}
+            newWordOpen={newWordOpen}
+            userId={userId}
+            userDictionaries={userDictionaries}
+            handleCloseAlert={handleCloseAlert}
+            newWordAlertOpen={newWordAlertOpen}
+            setWordErrorOpen={setDictionaryErrorOpen}
+            setNewWordAlertOpen={setNewWordAlertOpen}
+          />
+        ) : null}
       </Container>
     </Box>
   );

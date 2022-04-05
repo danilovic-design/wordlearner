@@ -37,6 +37,7 @@ export default function Dictionary({
   setDeleteDictionaryAlertOpen,
   userDictionaries,
   userId,
+  setNewWordDictionary,
 }) {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -71,7 +72,10 @@ export default function Dictionary({
           >
             <Chip
               label="Add a new word"
-              onClick={handleOpenWord}
+              onClick={() => {
+                setNewWordDictionary(data);
+                handleOpenWord();
+              }}
               variant="outlined"
               icon={<AddCircleIcon />}
             />
@@ -132,18 +136,6 @@ export default function Dictionary({
         setDeleteDictionaryAlertOpen={setDeleteDictionaryAlertOpen}
         userDictionaries={userDictionaries}
         userId={userId}
-      />
-
-      <NewWordModal
-        data={data}
-        handleCloseWord={handleCloseWord}
-        newWordOpen={newWordOpen}
-        userId={userId}
-        userDictionaries={userDictionaries}
-        handleCloseAlert={handleCloseAlert}
-        newWordAlertOpen={newWordAlertOpen}
-        setWordErrorOpen={setDictionaryErrorOpen}
-        setNewWordAlertOpen={setNewWordAlertOpen}
       />
     </Box>
   );
