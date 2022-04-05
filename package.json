@@ -2,7 +2,7 @@
   "name": "wordlearner",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://danilovic-design.github.io/wordlearner",
+  "homepage": "https://danilovic-design.github.io/wordlearner/",
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
