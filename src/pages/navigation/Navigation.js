@@ -15,6 +15,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { PAGEROOT } from "../../database/deploy";
 
 /*const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -68,7 +69,7 @@ export default function PrimarySearchAppBar() {
   React.useEffect(() => {
     if (!isAuthenticated && logoutDone) {
       setLogoutDone(false);
-      navigate("/login");
+      navigate(`${PAGEROOT}login`);
     }
   }, [isAuthenticated, navigate, logoutDone]);
 
@@ -110,7 +111,7 @@ export default function PrimarySearchAppBar() {
       <MenuItem
         onClick={() => {
           handleMenuClose();
-          navigate("/profile");
+          navigate(`${PAGEROOT}profile`);
         }}
       >
         <ListItemIcon>
@@ -150,7 +151,7 @@ export default function PrimarySearchAppBar() {
             <Button
               color="inherit"
               onClick={() => {
-                navigate("/login");
+                navigate(`${PAGEROOT}login`);
               }}
             >
               Login

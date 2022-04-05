@@ -11,6 +11,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
 import { resetPassword } from "../../database/authfunctions";
+import { PAGEROOT } from "../../database/deploy";
 
 /*function delCopyright(props) {
   return (
@@ -39,7 +40,7 @@ export default function Login() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     resetPassword(data.get("email")).then(() => {
-      navigate("/");
+      navigate(`${PAGEROOT}`);
     });
   };
 
@@ -86,12 +87,20 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link component={BrowserLink} to={"/login"} variant="body2">
+                <Link
+                  component={BrowserLink}
+                  to={`${PAGEROOT}login`}
+                  variant="body2"
+                >
                   "Do you have an account? Sign In"
                 </Link>
               </Grid>
               <Grid item>
-                <Link component={BrowserLink} to={"/signup"} variant="body2">
+                <Link
+                  component={BrowserLink}
+                  to={`${PAGEROOT}signup`}
+                  variant="body2"
+                >
                   "Don't you have an account? Sign Up"
                 </Link>
               </Grid>

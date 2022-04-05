@@ -15,6 +15,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { StateContext } from "../contexts/Statecontext";
 import LandingPage from "../pages/landingpage/Landingpage";
+import { PAGEROOT } from "../database/deploy";
 
 const CircularIndeterminate = function () {
   return (
@@ -40,7 +41,7 @@ export default function Layout() {
       {isLoaded ? (
         <Routes>
           <Route
-            path="/"
+            path={PAGEROOT}
             element={
               <PublicRoute>
                 <LandingPage />
@@ -48,7 +49,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/dictionaries"
+            path={`${PAGEROOT}dictionaries`}
             element={
               <ProtectedRoute>
                 <Dictionaries />
@@ -56,7 +57,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/signup"
+            path={`${PAGEROOT}signup`}
             element={
               <PublicRoute>
                 <SignUp />
@@ -64,7 +65,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/login"
+            path={`${PAGEROOT}login`}
             element={
               <PublicRoute>
                 <Login />
@@ -72,7 +73,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/resetpassword"
+            path={`${PAGEROOT}resetpassword`}
             element={
               <PublicRoute>
                 <UnderConstruction />
@@ -80,7 +81,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/dictionary/:dictId"
+            path={`${PAGEROOT}dictionary/:dictId`}
             element={
               <ProtectedRoute>
                 <Wordlist />
@@ -88,7 +89,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/test/:dictId"
+            path={`${PAGEROOT}test/:dictId`}
             element={
               <ProtectedRoute>
                 <Tester />
@@ -96,7 +97,7 @@ export default function Layout() {
             }
           />
           <Route
-            path="/profile"
+            path={`${PAGEROOT}profile`}
             element={
               <ProtectedRoute>
                 <Profile />
@@ -104,7 +105,7 @@ export default function Layout() {
             }
           />
 
-          <Route path="*" element={<Notfound />} />
+          <Route path={`${PAGEROOT}*`} element={<Notfound />} />
         </Routes>
       ) : (
         <CircularIndeterminate />

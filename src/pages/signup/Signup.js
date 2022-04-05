@@ -14,6 +14,7 @@ import Copyright from "../copyright/Copyright";
 import { Link as BrowserLink } from "react-router-dom";
 import { mainBoxStyle } from "../../styles/Main";
 import { errorText } from "../../database/errorcodes";
+import { PAGEROOT } from "../../database/deploy";
 
 /*function Copyright(props) {
   return (
@@ -46,7 +47,7 @@ export default function Signup() {
 
     signUp(data.get("email"), data.get("password"))
       .then(() => {
-        navigate("/");
+        navigate(`${PAGEROOT}`);
       })
 
       .catch((firebaseError) => {
@@ -125,7 +126,7 @@ export default function Signup() {
                 <Grid item xs>
                   <Link
                     component={BrowserLink}
-                    to="/resetpassword"
+                    to={`${PAGEROOT}resetpassword`}
                     variant="body2"
                     color="secondary"
                   >
@@ -135,11 +136,11 @@ export default function Signup() {
                 <Grid item>
                   <Link
                     component={BrowserLink}
-                    to="/login"
+                    to={`${PAGEROOT}login`}
                     variant="body2"
                     color="secondary"
                   >
-                    {"Do you have an account? Sign In"}
+                    Do you have an account? Sign In
                   </Link>
                 </Grid>
               </Grid>

@@ -15,6 +15,7 @@ import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
 import { mainBoxStyle } from "../../styles/Main";
 import { errorText } from "../../database/errorcodes";
+import { PAGEROOT } from "../../database/deploy";
 
 /*function delCopyright(props) {
   return (
@@ -51,7 +52,7 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     signIn(data.get("email"), data.get("password"), persistence)
       .then(() => {
-        navigate("/");
+        navigate(`${PAGEROOT}`);
       })
       .catch((firebaseError) => {
         setError(errorText(firebaseError.code));
@@ -127,7 +128,7 @@ export default function Login() {
                 <Grid item xs>
                   <Link
                     component={BrowserLink}
-                    to={"/resetpassword"}
+                    to={`${PAGEROOT}resetpassword`}
                     variant="body2"
                     color="secondary"
                   >
@@ -137,7 +138,7 @@ export default function Login() {
                 <Grid item>
                   <Link
                     component={BrowserLink}
-                    to={"/signup"}
+                    to={`${PAGEROOT}signup`}
                     variant="body2"
                     color="secondary"
                   >

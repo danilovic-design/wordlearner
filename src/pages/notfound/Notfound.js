@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { mainBoxStyle } from "../../styles/Main";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function Notfound() {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function Notfound() {
           <Typography pb={2} color="text.primary" align="center" variant="h6">
             The requested page is not found
           </Typography>
-          <Button onClick={() => navigate("/")} fullWidth>
+          <Button onClick={() => navigate(`${PAGEROOT}`)} fullWidth>
             Go back to homepage
           </Button>
         </Box>

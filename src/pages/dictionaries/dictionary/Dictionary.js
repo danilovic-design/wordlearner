@@ -18,6 +18,7 @@ import Stack from "@mui/material/Stack";
 import { useNavigate } from "react-router-dom";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { PAGEROOT } from "../../../database/deploy";
 
 export default function Dictionary({
   data,
@@ -76,7 +77,7 @@ export default function Dictionary({
             />
             <Chip
               label="Start a word test"
-              onClick={() => navigate(`/test/${data.dictId}`)}
+              onClick={() => navigate(`${PAGEROOT}test/${data.dictId}`)}
               icon={<PlayCircleFilledWhiteIcon />}
             />
           </Stack>
@@ -99,7 +100,7 @@ export default function Dictionary({
           <MenuItem
             onClick={() => {
               handleClose();
-              navigate(`/dictionary/${data.dictId}`);
+              navigate(`${PAGEROOT}dictionary/${data.dictId}`);
             }}
           >
             <ListItemIcon>

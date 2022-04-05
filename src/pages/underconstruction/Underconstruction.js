@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import { mainBoxStyle } from "../../styles/Main";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function UnderConstruction() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ export default function UnderConstruction() {
             This page is under construction, please visit us later
           </Typography>
           <Button
-            onClick={() => navigate("/")}
+            onClick={() => navigate(`${PAGEROOT}`)}
             fullWidth
             variant="contained"
             color="secondary"

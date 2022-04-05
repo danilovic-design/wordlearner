@@ -15,6 +15,7 @@ import { mainBoxStyle } from "../../styles/Main";
 import { useNavigate } from "react-router-dom";
 import Stack from "@mui/material/Stack";
 import DictionarySnackbars from "./dictionarysnackbars/Dictionarysnackbars";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function Dictionaries() {
   /*  ----------------
@@ -79,7 +80,7 @@ export default function Dictionaries() {
         <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
           <StyledBreadcrumb
             onClick={() => {
-              navigate("/");
+              navigate(`${PAGEROOT}`);
             }}
             label="Home"
             icon={<HomeIcon fontSize="small" />}

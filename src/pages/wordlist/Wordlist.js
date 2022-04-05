@@ -16,6 +16,7 @@ import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
 import HomeIcon from "@mui/icons-material/Home";
 import Stack from "@mui/material/Stack";
 import WordlistSnackbars from "./wordlistsnackbars/Wordlistsnackbars";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function Words() {
   const { dictId } = useParams();
@@ -47,8 +48,7 @@ export default function Words() {
         setDictWords(pageDictionaryObject.words);
         setDictData(pageDictionaryObject);
       } else {
-        console.log("Not found");
-        navigate("/notfound");
+        navigate(`${PAGEROOT}notfound`);
       }
     }
   }, [dictId, storedDictionaryData, navigate]);
@@ -73,7 +73,7 @@ export default function Words() {
         <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
           <StyledBreadcrumb
             onClick={() => {
-              navigate("/");
+              navigate(`${PAGEROOT}`);
             }}
             label="Home"
             icon={<HomeIcon fontSize="small" />}

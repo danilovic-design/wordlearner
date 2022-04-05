@@ -15,6 +15,7 @@ import ReloginBox from "./reloginbox/Reloginbox";
 import { signIn } from "../../database/authfunctions";
 import LoginAction from "./loginaction/Loginaction";
 import { errorText } from "../../database/errorcodes";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ export default function Profile() {
         <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
           <StyledBreadcrumb
             onClick={() => {
-              navigate("/");
+              navigate(`${PAGEROOT}`);
             }}
             label="Home"
             icon={<HomeIcon fontSize="small" />}

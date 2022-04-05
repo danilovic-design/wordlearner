@@ -12,6 +12,7 @@ import { BreadCrumbTypographyStyle } from "../../styles/Main";
 import { mainBoxStyle } from "../../styles/Main";
 import { StyledBreadcrumb } from "../../styles/StyledBreadcrumb";
 import HomeIcon from "@mui/icons-material/Home";
+import { PAGEROOT } from "../../database/deploy";
 
 export default function Tester() {
   const navigate = useNavigate();
@@ -88,7 +89,7 @@ export default function Tester() {
         <Breadcrumbs aria-label="breadcrumb" sx={BreadCrumbTypographyStyle}>
           <StyledBreadcrumb
             onClick={() => {
-              navigate("/");
+              navigate(`${PAGEROOT}`);
             }}
             label="Home"
             icon={<HomeIcon fontSize="small" />}

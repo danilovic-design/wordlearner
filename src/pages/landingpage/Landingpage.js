@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Grid from "@mui/material/Grid";
+import { PAGEROOT } from "../../database/deploy";
 
 const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -65,7 +66,7 @@ export default function LandingPage() {
             <Box pt={3} pb={2}>
               <Button
                 onClick={() => {
-                  navigate("/login");
+                  navigate(`${PAGEROOT}login`);
                 }}
                 variant="contained"
                 color="secondary"
