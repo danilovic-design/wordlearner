@@ -1,5 +1,5 @@
 import * as React from "react";
-import { mainBoxStyle } from "../../styles/Main";
+import { landingBoxStyle } from "../../styles/Main";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -22,7 +22,7 @@ const Demo = styled("div")(({ theme }) => ({
 export default function LandingPage() {
   const navigate = useNavigate();
   return (
-    <Box sx={mainBoxStyle} pt={5} pb={3} pl={2} pr={2}>
+    <Box sx={landingBoxStyle} pt={5} pb={3} pl={2} pr={2}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Demo>
