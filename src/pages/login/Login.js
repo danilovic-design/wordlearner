@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "../../database/authfunctions";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
-import { mainBoxStyle } from "../../styles/Main";
+import { landingBoxStyle } from "../../styles/Main";
 import { errorText } from "../../database/errorcodes";
 import { PAGEROOT } from "../../database/deploy";
 
@@ -62,7 +62,7 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={mainBoxStyle}>
+      <Box sx={landingBoxStyle}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
