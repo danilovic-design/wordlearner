@@ -25,3 +25,12 @@ export const landingBoxStyle = {
   background: `url(${landingPageImage}) no-repeat center center fixed`,
   backgroundSize: "cover",
 };
+
+export const authFormStyle = {
+  pt: 5,
+  pl: 2,
+  pr: 2,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+};

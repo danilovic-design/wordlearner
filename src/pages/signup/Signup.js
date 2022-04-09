@@ -12,9 +12,10 @@ import { signUp } from "../../database/authfunctions";
 import { useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
 import { Link as BrowserLink } from "react-router-dom";
-import { landingBoxStyle } from "../../styles/Main";
+import { authFormStyle, landingBoxStyle } from "../../styles/Main";
 import { errorText } from "../../database/errorcodes";
 import { PAGEROOT } from "../../database/deploy";
+import { styled } from "@mui/material/styles";
 
 /*function Copyright(props) {
   return (
@@ -33,6 +34,10 @@ import { PAGEROOT } from "../../database/deploy";
     </Typography>
   );
 }*/
+
+const Demo = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
 
 const theme = createTheme();
 
@@ -58,96 +63,95 @@ export default function Signup() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={landingBoxStyle}>
+      <Box sx={landingBoxStyle} pt={5} pb={3} pl={2} pr={2}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
-            sx={{
-              pt: 5,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography component="h1" variant="h5">
-              {pageText}
-            </Typography>
-            <Box component="form" onSubmit={handleSignupSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                color="secondary"
-                variant="filled"
-                autoFocus
-                error={error ? true : false}
-                helperText={error ? error : null}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                color="secondary"
-                type="password"
-                id="password"
-                variant="filled"
-                error={error ? true : false}
-                helperText={error ? error : null}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="passwordagain"
-                label="Password again"
-                type="password"
-                color="secondary"
-                id="passwordagain"
-                variant="filled"
-                error={error ? true : false}
-                helperText={error ? error : null}
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="secondary"
-                sx={{ mt: 3, mb: 2 }}
-              >
+          <Demo>
+            <Box sx={authFormStyle}>
+              <Typography component="h1" variant="h5">
                 {pageText}
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    component={BrowserLink}
-                    to={`${PAGEROOT}resetpassword`}
-                    variant="body2"
-                    color="secondary"
-                  >
-                    Forgot password?
-                  </Link>
+              </Typography>
+              <Box
+                component="form"
+                onSubmit={handleSignupSubmit}
+                sx={{ mt: 1 }}
+              >
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  color="secondary"
+                  variant="filled"
+                  autoFocus
+                  error={error ? true : false}
+                  helperText={error ? error : null}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  color="secondary"
+                  type="password"
+                  id="password"
+                  variant="filled"
+                  error={error ? true : false}
+                  helperText={error ? error : null}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="passwordagain"
+                  label="Password again"
+                  type="password"
+                  color="secondary"
+                  id="passwordagain"
+                  variant="filled"
+                  error={error ? true : false}
+                  helperText={error ? error : null}
+                />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  {pageText}
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link
+                      component={BrowserLink}
+                      to={`${PAGEROOT}resetpassword`}
+                      variant="body2"
+                      color="secondary"
+                    >
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link
+                      component={BrowserLink}
+                      to={`${PAGEROOT}login`}
+                      variant="body2"
+                      color="secondary"
+                    >
+                      Do you have an account? Sign In
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link
-                    component={BrowserLink}
-                    to={`${PAGEROOT}login`}
-                    variant="body2"
-                    color="secondary"
-                  >
-                    Do you have an account? Sign In
-                  </Link>
-                </Grid>
-              </Grid>
+              </Box>
+              <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>
-          </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
+          </Demo>
         </Container>
       </Box>
     </ThemeProvider>

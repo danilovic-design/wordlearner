@@ -13,9 +13,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { signIn } from "../../database/authfunctions";
 import { Link as BrowserLink, useNavigate } from "react-router-dom";
 import Copyright from "../copyright/Copyright";
-import { landingBoxStyle } from "../../styles/Main";
+import { landingBoxStyle, authFormStyle } from "../../styles/Main";
 import { errorText } from "../../database/errorcodes";
 import { PAGEROOT } from "../../database/deploy";
+import { styled } from "@mui/material/styles";
 
 /*function delCopyright(props) {
   return (
@@ -34,6 +35,10 @@ import { PAGEROOT } from "../../database/deploy";
     </Typography>
   );
 }*/
+
+const Demo = styled("div")(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
 
 const theme = createTheme();
 
@@ -62,94 +67,89 @@ export default function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={landingBoxStyle}>
+      <Box sx={landingBoxStyle} pt={5} pb={3} pl={2} pr={2}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
-          <Box
-            sx={{
-              pt: 5,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <Typography component="h1" variant="h5">
-              {pageText}
-            </Typography>
-            <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                color="secondary"
-                autoFocus
-                variant="filled"
-                error={error ? true : false}
-                helperText={error ? error : null}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                color="secondary"
-                id="password"
-                variant="filled"
-                autoComplete="current-password"
-                error={error ? true : false}
-                helperText={error ? error : null}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    color="primary"
-                    checked={persistence}
-                    onChange={handlePersistenceChange}
-                  />
-                }
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                color="secondary"
-              >
+          <Demo>
+            <Box sx={authFormStyle}>
+              <Typography component="h1" variant="h5">
                 {pageText}
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    component={BrowserLink}
-                    to={`${PAGEROOT}resetpassword`}
-                    variant="body2"
-                    color="secondary"
-                  >
-                    Forgot password?
-                  </Link>
+              </Typography>
+              <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  color="secondary"
+                  autoFocus
+                  variant="filled"
+                  error={error ? true : false}
+                  helperText={error ? error : null}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  color="secondary"
+                  id="password"
+                  variant="filled"
+                  autoComplete="current-password"
+                  error={error ? true : false}
+                  helperText={error ? error : null}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      value="remember"
+                      color="primary"
+                      checked={persistence}
+                      onChange={handlePersistenceChange}
+                    />
+                  }
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                  color="secondary"
+                >
+                  {pageText}
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link
+                      component={BrowserLink}
+                      to={`${PAGEROOT}resetpassword`}
+                      variant="body2"
+                      color="secondary"
+                    >
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link
+                      component={BrowserLink}
+                      to={`${PAGEROOT}signup`}
+                      variant="body2"
+                      color="secondary"
+                    >
+                      "Don't have an account? Sign Up"
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link
-                    component={BrowserLink}
-                    to={`${PAGEROOT}signup`}
-                    variant="body2"
-                    color="secondary"
-                  >
-                    "Don't have an account? Sign Up"
-                  </Link>
-                </Grid>
-              </Grid>
+              </Box>
+              <Copyright sx={{ mt: 8, mb: 4 }} />
             </Box>
-          </Box>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
+          </Demo>
         </Container>
       </Box>
     </ThemeProvider>
