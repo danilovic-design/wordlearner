@@ -144,7 +144,7 @@ export default function Signup() {
                       variant="body2"
                       color="secondary"
                     >
-                      Do you have an account? Sign In
+                      Do you have an account? Log In
                     </Link>
                   </Grid>
                 </Grid>
