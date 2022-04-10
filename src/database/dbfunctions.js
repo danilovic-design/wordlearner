@@ -39,7 +39,7 @@ const existingDict = (data) => {
     dictId: `${data.firstLang.toLowerCase()}${data.secondLang.toLowerCase()}`,
   };
   let updatedDictionaries = [...data.userDictionaries];
-  updatedDictionaries.push(newDictData);
+  updatedDictionaries.unshift(newDictData);
   let dbData = { userDictionaries: updatedDictionaries };
   return setDoc(doc(db, databaseCollection, data.userId), dbData);
 };
@@ -88,7 +88,7 @@ export const saveNewWord = ({
   });
   changedDictionary[0].words = changedWords;
 
-  unchangedDictionaries.push(changedDictionary[0]);
+  unchangedDictionaries.unshift(changedDictionary[0]);
 
   let dbData = { userDictionaries: unchangedDictionaries };
 
@@ -109,7 +109,7 @@ export const deleteWord = ({ userId, dictId, userDictionaries, wordData }) => {
 
   changedDictionary[0].words = changedWordList;
 
-  unchangedDictionaries.push(changedDictionary[0]);
+  unchangedDictionaries.unshift(changedDictionary[0]);
 
   let dbData = { userDictionaries: unchangedDictionaries };
 
@@ -138,7 +138,7 @@ export const changeWord = ({
 
   changedDictionary[0].words = changedWordList;
 
-  unchangedDictionaries.push(changedDictionary[0]);
+  unchangedDictionaries.unshift(changedDictionary[0]);
 
   let dbData = { userDictionaries: unchangedDictionaries };
 

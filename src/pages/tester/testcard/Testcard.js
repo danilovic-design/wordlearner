@@ -63,7 +63,7 @@ export default function TestCard({
         }
       />
 
-      <CardActions disableSpacing={true} sx={{ justifyContent: "flex-end" }}>
+      <CardActions disableSpacing={true} sx={{ justifyContent: "flex-start" }}>
         <Typography variant="subtitle2" component="div" sx={{ color: "grey" }}>
           Click for hint
         </Typography>
