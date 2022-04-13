@@ -9,8 +9,27 @@ import { db } from "./firebaseconfig";
 export const databaseCollection = "data";
 
 /**
+ * 
+ * @typedef Word
+ * @type {Object}
+ * @property {String} firstLang - one of the two languages of a Dictionary.
+ * @property {String} secondLang - one of the two languages of a Dictionary.
+ * @property {number} rightGuesses - returns the number how many times the word had a right guess.
+ *
+ * 
+ * @typedef Dictionary
+ * @type {Object}
+ * @property {String} firstLang - one of the two languages of a Dictionary.
+ * @property {String} secondLang - one of the two languages of a Dictionary.
+ * @property {Array} words - an array of @type {Word}.
+ *
+ * /
+ 
+
+/** newDict
  * It may only be called by saveDict function
- * @param {Object} data - must contain <Wordobject> data
+ * Creates a new @type {Dictionary} in the database
+ * @param {Object} data - must contain @type {Word} and a {String}[dictId]
  * @returns a Promise from the database
  */
 

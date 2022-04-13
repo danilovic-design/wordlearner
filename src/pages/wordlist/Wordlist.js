@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Word from "./word/Word";
-import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { DataContext } from "../../contexts/Datacontext";
@@ -17,12 +16,14 @@ import HomeIcon from "@mui/icons-material/Home";
 import Stack from "@mui/material/Stack";
 import WordlistSnackbars from "./wordlistsnackbars/Wordlistsnackbars";
 import { PAGEROOT } from "../../database/deploy";
+import WordSearchbar from "./wordsearchbar/Wordsearchbar";
+import { getFilteredWordlist } from "./functions/wordlistfunctions";
 
 export default function Words() {
   const { dictId } = useParams();
   const { storedDictionaryData } = useContext(DataContext);
   const { uid } = useContext(AuthContext);
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(null); /** @returns {String} */
   const [dictWords, setDictWords] = useState([]);
   const [dictData, setDictData] = useState({});
   const [allDictionaryData, setAllDictionaryData] = useState();
@@ -30,23 +31,23 @@ export default function Words() {
   const [newWordAlertOpen, setNewWordAlertOpen] = useState(false);
   const [deleteWordAlertOpen, setDeleteWordAlertOpen] = useState(false);
   const [wordErrorOpen, setWordErrorOpen] = useState(false);
+  const [filteredWordlist, setFilteredWordlist] = useState([]);
   const navigate = useNavigate();
 
-  const handleCloseAlert = () => {
-    setNewWordAlertOpen(false);
-    setDeleteWordAlertOpen(false);
-  };
-
   useEffect(() => {
+    // Getting the current dictionary from more dictionaries
     if (storedDictionaryData.length > 0) {
       setAllDictionaryData(storedDictionaryData);
-      let filteredDictionary = storedDictionaryData.filter((dict) => {
-        return dict.dictId === dictId;
-      });
-      let pageDictionaryObject = filteredDictionary[0];
-      if (pageDictionaryObject) {
-        setDictWords(pageDictionaryObject.words);
-        setDictData(pageDictionaryObject);
+      let dictionaryForTheCurrentLanguage = storedDictionaryData.filter(
+        (dict) => {
+          return dict.dictId === dictId;
+        }
+      );
+      let currentLanguage = dictionaryForTheCurrentLanguage[0];
+      if (currentLanguage) {
+        setDictWords(currentLanguage.words);
+        setFilteredWordlist(currentLanguage.words);
+        setDictData(currentLanguage);
       } else {
         navigate(`${PAGEROOT}notfound`);
       }
@@ -57,6 +58,11 @@ export default function Words() {
     setUserId(uid);
   }, [uid]);
 
+  const handleCloseAlert = () => {
+    setNewWordAlertOpen(false);
+    setDeleteWordAlertOpen(false);
+  };
+
   const handleNewWordModalOn = () => {
     console.log("handling");
     setNewWordOpen(true);
@@ -64,6 +70,13 @@ export default function Words() {
 
   const handleCloseWord = () => {
     setNewWordOpen(false);
+  };
+
+  const handleSearchChange = (changeEvent) => {
+    console.log("Changed event", changeEvent.target.value);
+    setFilteredWordlist(
+      getFilteredWordlist(dictWords, changeEvent.target.value)
+    );
   };
 
   return (
@@ -96,10 +109,11 @@ export default function Words() {
           setNewWordAlertOpen={setNewWordAlertOpen}
           setWordErrorOpen={setWordErrorOpen}
         />
-        <Divider />
+        <WordSearchbar handleSearchChange={handleSearchChange} />
+
         <Box>
           <Stack spacing={1}>
-            {dictWords.map((wordData, index) => (
+            {filteredWordlist.map((wordData, index) => (
               <Word
                 key={`word${index}`}
                 wordData={wordData}
@@ -113,7 +127,9 @@ export default function Words() {
           </Stack>
         </Box>
 
-        {dictWords.length === 0 ? "No words" : null}
+        {dictWords.length === 0
+          ? "There are no words in this dictionary yet."
+          : null}
         <Box>
           <Button
             onClick={handleNewWordModalOn}
