@@ -3,6 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/Authcontext";
 import { DataProvider } from "./contexts/Datacontext";
 import { StateProvider } from "./contexts/Statecontext";
+import { CookieProvider } from "./contexts/Cookiecontext";
 import Layout from "./layout/Layout";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -15,7 +16,9 @@ function App() {
         <AuthProvider>
           <DataProvider>
             <ThemeProvider theme={theme}>
-              <Layout />
+              <CookieProvider>
+                <Layout />
+              </CookieProvider>
             </ThemeProvider>
           </DataProvider>
         </AuthProvider>

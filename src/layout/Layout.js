@@ -10,13 +10,15 @@ import Profile from "../pages/profile/Profile";
 import ProtectedRoute from "../contexts/ProtectedRoute";
 import PublicRoute from "../contexts/PublicRoute";
 import SignUp from "../pages/signup/Signup";
-//import UnderConstruction from "../pages/underconstruction/Underconstruction";
+import UnderConstruction from "../pages/underconstruction/Underconstruction";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { StateContext } from "../contexts/Statecontext";
+import { CookieContext } from "../contexts/Cookiecontext";
 import LandingPage from "../pages/landingpage/Landingpage";
 import { PAGEROOT } from "../database/deploy";
 import ForgotPassword from "../pages/forgotpassword/Forgotpassword";
+import CookieConsent from "../pages/cookieconsent/Cookieconsent";
 
 const CircularIndeterminate = function () {
   return (
@@ -35,6 +37,7 @@ const CircularIndeterminate = function () {
 
 export default function Layout() {
   const { isLoaded } = React.useContext(StateContext);
+  const { cookiesConsented } = React.useContext(CookieContext);
 
   return (
     <div>
@@ -106,11 +109,21 @@ export default function Layout() {
             }
           />
 
+          <Route
+            path={`${PAGEROOT}cookiepolicy`}
+            element={
+              <ProtectedRoute>
+                <UnderConstruction />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path={`${PAGEROOT}*`} element={<Notfound />} />
         </Routes>
       ) : (
         <CircularIndeterminate />
       )}
+      {!cookiesConsented && <CookieConsent />}
     </div>
   );
 }
