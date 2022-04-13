@@ -4,8 +4,10 @@
 export const getFilteredWordlist = (allWords, searchKeyWord) => {
   let filteredWordArray = allWords.filter((wordObject) => {
     return (
-      wordObject.firstLang.includes(searchKeyWord) ||
-      wordObject.secondLang.includes(searchKeyWord)
+      wordObject.firstLang
+        .toLowerCase()
+        .includes(searchKeyWord.toLowerCase()) ||
+      wordObject.secondLang.toLowerCase().includes(searchKeyWord.toLowerCase())
     );
   });
   return filteredWordArray;

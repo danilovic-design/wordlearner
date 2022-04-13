@@ -73,7 +73,6 @@ export default function Words() {
   };
 
   const handleSearchChange = (changeEvent) => {
-    console.log("Changed event", changeEvent.target.value);
     setFilteredWordlist(
       getFilteredWordlist(dictWords, changeEvent.target.value)
     );
