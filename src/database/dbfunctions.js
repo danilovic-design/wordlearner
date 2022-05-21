@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebaseconfig";
 
 /**
@@ -33,14 +33,14 @@ export const databaseCollection = "data";
  * @returns a Promise from the database
  */
 
-const newDict = (data) => {
-  let newDictData = {
+const createNewDictionary = (data) => {
+  let newDictionary = {
     firstLang: data.firstLang,
     secondLang: data.secondLang,
     words: [],
     dictId: `${data.firstLang.toLowerCase()}${data.secondLang.toLowerCase()}`,
   };
-  let dbData = { userDictionaries: [newDictData] };
+  let dbData = { userDictionaries: [newDictionary] };
 
   return setDoc(doc(db, databaseCollection, data.userId), dbData);
 };
@@ -50,7 +50,7 @@ const newDict = (data) => {
  * @param {Object} data - must contain <Wordobject> data
  * @returns a Promise from the database
  */
-const existingDict = (data) => {
+const addNewDictionary = (data) => {
   let newDictData = {
     firstLang: data.firstLang,
     secondLang: data.secondLang,
@@ -64,16 +64,16 @@ const existingDict = (data) => {
 };
 
 /**
- * The function saves a new <Dictionary> to the database.
+ * The function saves a new @type {Dictionary} to the database.
  * Handles two other functions that handle either the case of empty DB
  * or already having a dictionary
  * @param {Object} data - <WordObject>
  */
 export const saveDict = (data) => {
   if (data.userDictionaries.length !== 0) {
-    return existingDict(data);
+    return addNewDictionary(data);
   } else {
-    return newDict(data);
+    return createNewDictionary(data);
   }
 };
 
@@ -83,6 +83,10 @@ export const deleteDict = (userDictionaries, dict2delete, userId) => {
   });
   let saveData = { userDictionaries: newDict };
   return setDoc(doc(db, databaseCollection, userId), saveData);
+};
+
+export const deleteEveryDictionary = ({ userId }) => {
+  deleteDoc(doc(db, databaseCollection, userId));
 };
 
 export const saveNewWord = ({
