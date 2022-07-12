@@ -40,7 +40,7 @@ export default function Words() {
       setAllDictionaryData(storedDictionaryData);
       let dictionaryForTheCurrentLanguage = storedDictionaryData.filter(
         (dict) => {
-          return dict.dictId === dictId;
+          return dict.dictId.trim() === dictId;
         }
       );
       let currentLanguage = dictionaryForTheCurrentLanguage[0];

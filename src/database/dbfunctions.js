@@ -31,14 +31,32 @@ export const databaseCollection = "data";
  * Creates a new @type {Dictionary} in the database
  * @param {Object} data - must contain @type {Word} and a {String}[dictId]
  * @returns a Promise from the database
+ * This function is called when there are no dictionaries yet, and the first one is introduced.
  */
 
 const createNewDictionary = (data) => {
+  console.log(data);
   let newDictionary = {
     firstLang: data.firstLang,
     secondLang: data.secondLang,
     words: [],
-    dictId: `${data.firstLang.toLowerCase()}${data.secondLang.toLowerCase()}`,
+    dictId: `${data.firstLang
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .join("")
+      .split("<")
+      .join("")
+      .split(">")
+      .join("")}${data.secondLang
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .join("")
+      .split("<")
+      .join("")
+      .split(">")
+      .join("")}`,
   };
   let dbData = { userDictionaries: [newDictionary] };
 
@@ -49,17 +67,38 @@ const createNewDictionary = (data) => {
  * It may only be called by saveDict function
  * @param {Object} data - must contain <Wordobject> data
  * @returns a Promise from the database
+ * This function is called (used) when there are more used dictionaries and one more is added
  */
 const addNewDictionary = (data) => {
+  console.log(data);
   let newDictData = {
     firstLang: data.firstLang,
     secondLang: data.secondLang,
     words: [],
-    dictId: `${data.firstLang.toLowerCase()}${data.secondLang.toLowerCase()}`,
+    dictId: `${data.firstLang
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .join("")
+      .split("<")
+      .join("")
+      .split(">")
+      .join("")}${data.secondLang
+      .toLowerCase()
+      .trim()
+      .split(" ")
+      .join("")
+      .split("<")
+      .join("")
+      .split(">")
+      .join("")}`,
   };
+
   let updatedDictionaries = [...data.userDictionaries];
   updatedDictionaries.unshift(newDictData);
+
   let dbData = { userDictionaries: updatedDictionaries };
+
   return setDoc(doc(db, databaseCollection, data.userId), dbData);
 };
 
