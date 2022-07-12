@@ -11,7 +11,11 @@ const Demo = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
 }));
 
-export default function ChangePasswordBox({ handleNewPasswordSubmit, error }) {
+export default function ChangePasswordBox({
+  handleNewPasswordSubmit,
+  error,
+  handleDeleteAccount,
+}) {
   const [deleteConfirmationOn, setDeleteConfirmation] = React.useState(false);
 
   return (
@@ -81,6 +85,7 @@ export default function ChangePasswordBox({ handleNewPasswordSubmit, error }) {
       <ConformDeleteAccount
         deleteConfirmationOn={deleteConfirmationOn}
         setDeleteConfirmation={setDeleteConfirmation}
+        handleDeleteAccount={handleDeleteAccount}
       />
     </Box>
   );

@@ -8,6 +8,8 @@ import {
   signOut,
   updatePassword,
   sendPasswordResetEmail,
+  getAuth,
+  deleteUser,
 } from "firebase/auth";
 
 export const signUp = (email, password) => {
@@ -35,4 +37,10 @@ export const changeUserPassword = (newPassword) => {
 
 export const resetPassword = (email) => {
   return sendPasswordResetEmail(auth, email);
+};
+
+export const deleteUserAccount = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  return deleteUser(user);
 };

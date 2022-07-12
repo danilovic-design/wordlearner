@@ -16,6 +16,10 @@ import { signIn } from "../../database/authfunctions";
 import LoginAction from "./loginaction/Loginaction";
 import { errorText } from "../../database/errorcodes";
 import { PAGEROOT } from "../../database/deploy";
+import { deleteEveryDictionary } from "../../database/dbfunctions";
+import { AuthContext } from "../../contexts/Authcontext";
+import { DataContext } from "../../contexts/Datacontext";
+import { deleteUserAccount } from "../../database/authfunctions";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -23,6 +27,8 @@ export default function Profile() {
     React.useState(false);
   const [reloginState, setReloginState] = React.useState(0);
   const [error, setError] = React.useState(null);
+  const { uid, setIsAuthenticated, setUid } = React.useContext(AuthContext);
+  const { setStoredDictionaryData } = React.useContext(DataContext);
 
   React.useEffect(() => {
     setReloginState(0);
@@ -73,6 +79,27 @@ export default function Profile() {
       });
   };
 
+  const handleDeleteAccount = () => {
+    deleteEveryDictionary(uid)
+      .then((result) => {
+        console.log(result);
+        return setStoredDictionaryData([]);
+      })
+      .then(() => {
+        return deleteUserAccount();
+      })
+      .then(() => {
+        setUid(null);
+        return setIsAuthenticated(false);
+      })
+      .then(() => {
+        navigate(`${PAGEROOT}`);
+      })
+      .catch((firebaseError) => {
+        setError(errorText(firebaseError.code));
+      });
+  };
+
   const getAction = (actionState) => {
     if (actionState === 0) {
       return <LoginAction setReloginState={setReloginState} />;
@@ -83,6 +110,7 @@ export default function Profile() {
     if (actionState === 2) {
       return (
         <ChangePasswordBox
+          handleDeleteAccount={handleDeleteAccount}
           handleNewPasswordSubmit={handleNewPasswordSubmit}
           error={error}
         />

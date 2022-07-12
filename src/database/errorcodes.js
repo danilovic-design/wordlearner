@@ -1,5 +1,4 @@
 export const errorText = (errorCode) => {
-  console.log(errorCode);
   switch (errorCode) {
     case "auth/user-not-found":
       return "Invalid email/password";

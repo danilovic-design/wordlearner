@@ -8,6 +8,7 @@ import { noWhiteSpace, sanitize } from "../security/sanitization";
  */
 
 export const databaseCollection = "data";
+//export const databaseCollection = "test";
 
 /**
  * 
@@ -36,13 +37,12 @@ export const databaseCollection = "data";
  */
 
 const createNewDictionary = (data) => {
-  console.log(data);
   let newDictionary = {
     firstLang: sanitize(data.firstLang),
     secondLang: sanitize(data.secondLang),
     words: [],
-    dictId: `${sanitize(noWhiteSpace(data.firstLang))}${sanitize(
-      noWhiteSpace(data.secondLang)
+    dictId: `${sanitize(noWhiteSpace(data.firstLang.toLowerCase()))}${sanitize(
+      noWhiteSpace(data.secondLang.toLowerCase())
     )}`,
   };
   let dbData = { userDictionaries: [newDictionary] };
@@ -62,8 +62,8 @@ const addNewDictionary = (data) => {
     firstLang: sanitize(data.firstLang),
     secondLang: sanitize(data.secondLang),
     words: [],
-    dictId: `${sanitize(noWhiteSpace(data.firstLang))}${sanitize(
-      noWhiteSpace(data.secondLang)
+    dictId: `${sanitize(noWhiteSpace(data.firstLang.toLowerCase()))}${sanitize(
+      noWhiteSpace(data.secondLang.toLowerCase())
     )}`,
   };
 
@@ -97,8 +97,8 @@ export const deleteDict = (userDictionaries, dict2delete, userId) => {
   return setDoc(doc(db, databaseCollection, userId), saveData);
 };
 
-export const deleteEveryDictionary = ({ userId }) => {
-  deleteDoc(doc(db, databaseCollection, userId));
+export const deleteEveryDictionary = (userId) => {
+  return deleteDoc(doc(db, databaseCollection, userId));
 };
 
 export const saveNewWord = ({

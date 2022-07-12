@@ -37,7 +37,7 @@ export default function LoginAction({ setReloginState }) {
             Delete account
           </Typography>
           <Typography pb={2} pt={2} variant="body2">
-            You need to relogin to delete your account your password
+            You need to relogin to delete your account
           </Typography>
           <Button
             onClick={() => {

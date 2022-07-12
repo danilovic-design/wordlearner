@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { AuthContext } from "../../../contexts/Authcontext";
 
 const style = {
   position: "absolute",
@@ -20,15 +19,14 @@ const style = {
 export default function ConfirmDeleteWord({
   deleteConfirmationOn,
   setDeleteConfirmation,
+  handleDeleteAccount,
 }) {
-  const { uid } = React.useContext(AuthContext);
-
-  const handleDeleteAccount = () => {
-    console.log(uid);
-  };
-
   const handleCloseDeletion = () => {
     setDeleteConfirmation(false);
+  };
+
+  const iWantToDelete = () => {
+    handleDeleteAccount();
   };
 
   return (
@@ -56,7 +54,7 @@ export default function ConfirmDeleteWord({
             </Button>
 
             <Button
-              onClick={handleDeleteAccount}
+              onClick={iWantToDelete}
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
