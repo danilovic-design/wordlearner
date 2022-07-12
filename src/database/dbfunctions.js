@@ -1,5 +1,6 @@
 import { doc, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from "./firebaseconfig";
+import { noWhiteSpace, sanitize } from "../security/sanitization";
 
 /**
  *  Collection name in database. The intire database is stored inside one collection
@@ -37,26 +38,12 @@ export const databaseCollection = "data";
 const createNewDictionary = (data) => {
   console.log(data);
   let newDictionary = {
-    firstLang: data.firstLang,
-    secondLang: data.secondLang,
+    firstLang: sanitize(data.firstLang),
+    secondLang: sanitize(data.secondLang),
     words: [],
-    dictId: `${data.firstLang
-      .toLowerCase()
-      .trim()
-      .split(" ")
-      .join("")
-      .split("<")
-      .join("")
-      .split(">")
-      .join("")}${data.secondLang
-      .toLowerCase()
-      .trim()
-      .split(" ")
-      .join("")
-      .split("<")
-      .join("")
-      .split(">")
-      .join("")}`,
+    dictId: `${sanitize(noWhiteSpace(data.firstLang))}${sanitize(
+      noWhiteSpace(data.secondLang)
+    )}`,
   };
   let dbData = { userDictionaries: [newDictionary] };
 
@@ -72,26 +59,12 @@ const createNewDictionary = (data) => {
 const addNewDictionary = (data) => {
   console.log(data);
   let newDictData = {
-    firstLang: data.firstLang,
-    secondLang: data.secondLang,
+    firstLang: sanitize(data.firstLang),
+    secondLang: sanitize(data.secondLang),
     words: [],
-    dictId: `${data.firstLang
-      .toLowerCase()
-      .trim()
-      .split(" ")
-      .join("")
-      .split("<")
-      .join("")
-      .split(">")
-      .join("")}${data.secondLang
-      .toLowerCase()
-      .trim()
-      .split(" ")
-      .join("")
-      .split("<")
-      .join("")
-      .split(">")
-      .join("")}`,
+    dictId: `${sanitize(noWhiteSpace(data.firstLang))}${sanitize(
+      noWhiteSpace(data.secondLang)
+    )}`,
   };
 
   let updatedDictionaries = [...data.userDictionaries];
@@ -144,8 +117,8 @@ export const saveNewWord = ({
 
   let changedWords = [...changedDictionary[0].words];
   changedWords.push({
-    firstLang: firstLang,
-    secondLang: secondLang,
+    firstLang: sanitize(firstLang),
+    secondLang: sanitize(secondLang),
     rightGuesses: 0,
   });
   changedDictionary[0].words = changedWords;
@@ -186,10 +159,10 @@ export const changeWord = ({
   newWord,
 }) => {
   let unchangedDictionaries = userDictionaries.filter((dict) => {
-    return dict.dictId !== dictId;
+    return dict.dictId.trim() !== dictId.trim();
   });
   let changedDictionary = userDictionaries.filter((dict) => {
-    return dict.dictId === dictId;
+    return dict.dictId.trim() === dictId.trim();
   });
 
   let changedWordList = changedDictionary[0].words.filter((word) => {
